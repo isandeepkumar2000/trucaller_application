@@ -297,13 +297,13 @@ const AddNotesSection: React.FC<AddNotesProps> = observer(({id}) => {
         <ActivityIndicator size="large" color="#B6488D" />
       )}
       <View>
-        <View style={styles.notesContainer}>
+        {/* <View style={styles.notesContainer}>
           <Text style={styles.notesLabel}>Notes</Text>
           <Text style={styles.notesDescription}>
             Please enter the notes here
           </Text>
-        </View>
-        <View style={styles.textInputContainer}>
+        </View> */}
+        <View style={[styles.textInputContainer, {marginTop:20}]}>
           <TextInput
             multiline
             placeholder="Please enter the notes here"
@@ -350,7 +350,7 @@ const AddNotesSection: React.FC<AddNotesProps> = observer(({id}) => {
               borderRadius: 40,
             },
           ]}>
-          <Text style={styles.buttonText}>Skip</Text>
+          <Text style={styles.buttonText}>Cancel</Text>
         </Pressable>
         <Pressable
           onPress={handleSubmit}
@@ -363,7 +363,7 @@ const AddNotesSection: React.FC<AddNotesProps> = observer(({id}) => {
               borderRadius: 40,
             },
           ]}>
-          <Text style={styles.buttonText}>Add Notes</Text>
+          <Text style={styles.buttonText}>Add A Note</Text>
         </Pressable>
       </View>
     </View>

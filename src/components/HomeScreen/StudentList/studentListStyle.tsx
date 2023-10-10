@@ -12,7 +12,7 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 10,
+    marginBottom: 0,
   },
   parentText: {
     fontSize: 17,

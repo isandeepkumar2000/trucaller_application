@@ -228,11 +228,10 @@ const StudentListComponent: React.FC<StudentListComponentProps> = observer(
 
             {/* Footer buttons section */}
             <View style={styles.footerButtons}>
-              <Pressable>
-                <View style={styles.footerButton}>
-                  <Icon name="copy" size={18} style={styles.footerButtonIcon} />
-
+              <Pressable style={{width:'48%'}}>
+                <View>
                   <Pressable
+                  style={[styles.footerButton,  {width:'100%', justifyContent:'center'}]}
                     onPress={() =>
                       handleAddNotes(
                         item.firstname,
@@ -241,25 +240,23 @@ const StudentListComponent: React.FC<StudentListComponentProps> = observer(
                         item.joining_date,
                       )
                     }>
-                    <Text style={styles.footerButtonText}>Add Notes</Text>
+                      <Icon name="copy" size={18} style={styles.footerButtonIcon} />
+                    <Text style={styles.footerButtonText}>Notes</Text>
                   </Pressable>
                 </View>
               </Pressable>
 
-              <Pressable>
-                <View
+              <Pressable style={{width:'48%'}}>
+                <View>
+                  <Pressable
                   style={[
                     styles.footerButton,
                     {
                       backgroundColor: '#057FE1',
+                      width:'100%',
+                      justifyContent:'center'
                     },
-                  ]}>
-                  <Icon
-                    name="calendar"
-                    size={18}
-                    style={styles.footerButtonIcon}
-                  />
-                  <Pressable
+                  ]}
                     onPress={() =>
                       handleUpcomingNotes(
                         item.firstname,
@@ -268,7 +265,12 @@ const StudentListComponent: React.FC<StudentListComponentProps> = observer(
                         item.joining_date,
                       )
                     }>
-                    <Text style={styles.footerButtonText}>Upcoming Events</Text>
+                       <Icon
+                    name="calendar"
+                    size={18}
+                    style={styles.footerButtonIcon}
+                  />
+                    <Text style={styles.footerButtonText}> Events</Text>
                   </Pressable>
                 </View>
               </Pressable>

@@ -4,7 +4,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {observer} from 'mobx-react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {ActivityIndicator, View, StyleSheet} from 'react-native';
-
+import Icon from 'react-native-vector-icons/FontAwesome';
 import StudentList from './components/HomeScreen/homeScreen';
 import NotesScreen from './components/NotesScreen/notesScreen';
 import UpcomingScreen from './components/UpcomingScreen/upcomingScreen';
@@ -19,7 +19,10 @@ function MainScreens() {
     <MainStack.Navigator
       screenOptions={{
         headerShown: false,
-      }}>
+        headerRight: () => (
+          <Icon name="power-off" size={24} color="white" style={{ marginRight: 16 }} />
+        ),
+      }} >
       <MainStack.Screen
         name="studentList"
         component={StudentList}

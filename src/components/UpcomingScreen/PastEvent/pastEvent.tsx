@@ -164,9 +164,9 @@ const PastEvent: React.FC<PastEventProps> = observer(({id}) => {
                                 {marginBottom: 10, marginRight: 8},
                               ]}>
                               <Text
-                                style={[
+                                style={[styles.attendenceButtonContent,
                                   styles.buttonText,
-                                  {borderRadius: 5, backgroundColor: '#0A9856'},
+                                  {borderRadius: 5, },
                                 ]}>
                                 {item.attendance_book}{' '}
                                 {item.attendance_book_page_no}{' '}
@@ -188,8 +188,8 @@ const PastEvent: React.FC<PastEventProps> = observer(({id}) => {
                                 {marginBottom: 0, marginRight: 8},
                               ]}>
                               <Text
-                                style={[
-                                  styles.buttonText,
+                                style={[styles.attendenceButtonContent,
+                                  styles.buttonText, 
                                   {
                                     borderRadius: 5,
                                     marginBottom: 0,
@@ -255,9 +255,9 @@ const PastEvent: React.FC<PastEventProps> = observer(({id}) => {
                                 {marginBottom: 10, marginRight: 8},
                               ]}>
                               <Text
-                                style={[
+                                style={[styles.attendenceButtonContent,
                                   styles.buttonText,
-                                  {borderRadius: 5, backgroundColor: '#0A9856'},
+                                  {borderRadius: 5, backgroundColor: 'orange'},
                                 ]}>
                                 {item.group_level_name}{' '}
                               </Text>
