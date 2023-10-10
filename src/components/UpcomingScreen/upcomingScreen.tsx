@@ -90,7 +90,7 @@ const UpcomingScreen = observer(() => {
                     </Text>
                   )}
 
-                  <Text style={styles.buttonText}>Upcoming Event </Text>
+                  <Text style={styles.buttonText}>Upcoming Events</Text>
                 </>
               </>
             </TouchableHighlight>
@@ -117,7 +117,7 @@ const UpcomingScreen = observer(() => {
                     />
                   </Text>
                 )}
-                <Text style={styles.buttonText}>Past Event</Text>
+                <Text style={styles.buttonText}>Past Events</Text>
               </>
             </TouchableHighlight>
           </View>

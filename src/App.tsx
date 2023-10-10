@@ -1,8 +1,16 @@
 import React, {useEffect, useState} from 'react';
+import {action, runInAction} from 'mobx';
+import {observer} from 'mobx-react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {observer} from 'mobx-react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import StudentList from './components/HomeScreen/homeScreen';
+import NotesScreen from './components/NotesScreen/notesScreen';
+import UpcomingScreen from './components/UpcomingScreen/upcomingScreen';
+import LoginScreen from './components/LoginScreen/loginFormScreen';
+import authStore from './Store/LogicAuthStore/authStore';
+
 import {
   ActivityIndicator,
   View,
@@ -10,13 +18,7 @@ import {
   TouchableOpacity,
   Alert,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
-import StudentList from './components/HomeScreen/homeScreen';
-import NotesScreen from './components/NotesScreen/notesScreen';
-import UpcomingScreen from './components/UpcomingScreen/upcomingScreen';
-import LoginScreen from './components/LoginScreen/loginFormScreen';
-import authStore from './Store/LogicAuthStore/authStore';
-import {action, runInAction} from 'mobx';
+import CallLogAccessFile from './components/CallLogIntercept/callLogIntercept';
 
 const MainStack = createNativeStackNavigator();
 const AuthStack = createNativeStackNavigator();
@@ -136,6 +138,10 @@ const App = observer(() => {
             headerShown: false,
           }}>
           <AuthStack.Screen name="Login" component={LoginScreen} />
+          <AuthStack.Screen
+            name="CallLogAccessFile"
+            component={CallLogAccessFile}
+          />
         </AuthStack.Navigator>
       )}
       {authStore.isLoggedIn && (
@@ -162,3 +168,17 @@ const styles = StyleSheet.create({
 });
 
 export default App;
+
+// import {View, Text} from 'react-native';
+// import React from 'react';
+// import CallLogAccessFile from './components/CallLogIntercept/callLogIntercept';
+
+// const App = () => {
+//   return (
+//     <View>
+//       <CallLogAccessFile />
+//     </View>
+//   );
+// };
+
+// export default App;

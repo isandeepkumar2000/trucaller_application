@@ -65,7 +65,7 @@ const NotesScreen = observer(() => {
                   </Text>
                 )}
 
-                <Text style={styles.buttonText}>Add Notes </Text>
+                <Text style={styles.buttonText}>New Note</Text>
               </>
             </TouchableHighlight>
             <TouchableHighlight

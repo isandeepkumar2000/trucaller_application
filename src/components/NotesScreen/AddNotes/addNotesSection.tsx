@@ -356,7 +356,7 @@ const AddNotesSection: React.FC<AddNotesProps> = observer(({id}) => {
               borderRadius: 40,
             },
           ]}>
-          <Text style={styles.buttonText}>Add A Note</Text>
+          <Text style={styles.buttonText}>Submit</Text>
         </Pressable>
       </View>
     </View>
