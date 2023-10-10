@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {observer} from 'mobx-react';
@@ -13,7 +13,9 @@ import {
   SafeAreaView,
   TouchableOpacity,
   ToastAndroid,
+  Alert,
 } from 'react-native';
+import {performDeleteOperation} from '../../../utils/ApiFunctionCalls/apiFunctionCalls';
 
 interface ViewNotesProps {
   id: number;
@@ -66,6 +68,29 @@ export const ViewNotes: React.FC<ViewNotesProps> = observer(({id}) => {
     addNotesStore.toggleAccordion(index);
   };
 
+  const deleteNote = async (noteId: number) => {
+    Alert.alert(
+      'Delete Note',
+      'Are you sure you want to delete this note?',
+      [
+        {
+          text: 'Cancel',
+          style: 'cancel',
+        },
+        {
+          text: 'Yes',
+          onPress: async () => {
+            try {
+              await performDeleteOperation(noteId);
+              addNotesStore.deleteNote(noteId);
+            } catch (error) {}
+          },
+        },
+      ],
+      {cancelable: false},
+    );
+  };
+
   return (
     <SafeAreaView>
       <ScrollView contentInsetAdjustmentBehavior="automatic">
@@ -74,25 +99,32 @@ export const ViewNotes: React.FC<ViewNotesProps> = observer(({id}) => {
         ) : (
           <View style={styles.container}>
             {addNotesStore.addNotesData.map((item: any, index: any) => (
-              <View key={item.id || index} style={[styles.eventRow]}>
-                {item.raised_flag === null ||
-                item.raised_flag === 'yellow' ||
-                item.raised_flag === '' ? (
+              <View key={item.note_id || index} style={[styles.eventRow]}>
+                {item.raised_flag === null || item.raised_flag === '' ? (
                   <View
                     style={[
                       styles.eventLeft,
                       {
-                        backgroundColor: '#cfcfcf',
+                        backgroundColor:
+                          item.raised_flag === 'yellow'
+                            ? 'yellow'
+                            : item.raised_flag === 'golden'
+                            ? 'gold'
+                            : item.is_new_registration_flag === 1
+                            ? '#00FFFF'
+                            : '#cfcfcf',
                       },
                     ]}>
                     <TouchableOpacity
                       disabled={false}
+                      onPress={() => deleteNote(item.note_id)}
                       style={[styles.iconStyle]}>
                       <Icon
                         name="trash"
-                        size={18}
+                        size={20}
                         style={{
-                          color: '#fff',
+                          color:
+                            item.raised_flag === 'yellow' ? 'black' : '#fff',
                           fontSize: 0,
                         }}
                       />
@@ -106,12 +138,15 @@ export const ViewNotes: React.FC<ViewNotesProps> = observer(({id}) => {
                         backgroundColor: 'gold',
                       },
                     ]}>
-                    <TouchableOpacity style={styles.iconStyle}>
+                    <TouchableOpacity
+                      onPress={() => deleteNote(item.note_id)}
+                      style={styles.iconStyle}>
                       <Icon
                         name="trash"
-                        size={18}
+                        size={20}
                         style={{
-                          color: '#fff',
+                          color:
+                            item.raised_flag === 'yellow' ? '#363636' : '#fff',
                         }}
                       />
                     </TouchableOpacity>
@@ -124,12 +159,15 @@ export const ViewNotes: React.FC<ViewNotesProps> = observer(({id}) => {
                         backgroundColor: item.raised_flag,
                       },
                     ]}>
-                    <TouchableOpacity style={styles.iconStyle}>
+                    <TouchableOpacity
+                      onPress={() => deleteNote(item.note_id)}
+                      style={styles.iconStyle}>
                       <Icon
                         name="trash"
-                        size={18}
+                        size={20}
                         style={{
-                          color: '#fff',
+                          color:
+                            item.raised_flag === 'yellow' ? 'black' : '#fff',
                         }}
                       />
                     </TouchableOpacity>

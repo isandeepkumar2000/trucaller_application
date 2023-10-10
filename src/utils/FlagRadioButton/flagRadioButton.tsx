@@ -65,14 +65,6 @@ export const FlagNotes = [
     borderSize: 2,
   },
   {
-    id: '12',
-    label: 'Pink',
-    value: 'pink',
-    size: 16,
-    color: '#E91E63',
-    borderSize: 2,
-  },
-  {
     id: '10',
     label: 'Brown',
     value: 'brown',
@@ -86,6 +78,14 @@ export const FlagNotes = [
     value: 'golden',
     color: '#DB8301',
     size: 16,
+    borderSize: 2,
+  },
+  {
+    id: '12',
+    label: 'Pink',
+    value: 'pink',
+    size: 16,
+    color: '#E91E63',
     borderSize: 2,
   },
   {

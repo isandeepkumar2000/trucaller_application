@@ -27,7 +27,7 @@ interface AddNotesProps {
 
 const AddNotesSection: React.FC<AddNotesProps> = observer(({id}) => {
   const [minUnsetDate, setMinUnsetDate] = useState<Date>(new Date());
-
+  const [isLoading, setIsLoading] = useState(false);
   const navigation = useNavigation();
   const {
     studentNotes,
@@ -115,6 +115,7 @@ const AddNotesSection: React.FC<AddNotesProps> = observer(({id}) => {
   };
 
   const handleSubmit = async () => {
+    setIsLoading(true);
     try {
       if (!studentNotes) {
         ToastAndroid.showWithGravity(
@@ -150,6 +151,7 @@ const AddNotesSection: React.FC<AddNotesProps> = observer(({id}) => {
         });
 
         if (response.ok) {
+          setIsLoading(false);
           ToastAndroid.showWithGravity(
             'Data successfully submitted',
             ToastAndroid.LONG,
@@ -160,9 +162,8 @@ const AddNotesSection: React.FC<AddNotesProps> = observer(({id}) => {
           navigation.navigate('studentList');
         }
       }
-      addNotesStore.setIsLoading(false);
     } catch (error) {
-      addNotesStore.setIsLoading(false);
+      setIsLoading(false);
     }
   };
 
@@ -293,17 +294,9 @@ const AddNotesSection: React.FC<AddNotesProps> = observer(({id}) => {
 
   return (
     <View style={styles.container}>
-      {addNotesStore.isLoading && (
-        <ActivityIndicator size="large" color="#B6488D" />
-      )}
+      {isLoading && <ActivityIndicator size="large" color="#B6488D" />}
       <View>
-        {/* <View style={styles.notesContainer}>
-          <Text style={styles.notesLabel}>Notes</Text>
-          <Text style={styles.notesDescription}>
-            Please enter the notes here
-          </Text>
-        </View> */}
-        <View style={[styles.textInputContainer, {marginTop:20}]}>
+        <View style={[styles.textInputContainer, {marginTop: 20}]}>
           <TextInput
             multiline
             placeholder="Please enter the notes here"

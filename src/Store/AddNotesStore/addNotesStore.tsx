@@ -28,6 +28,7 @@ class AddNotesStore {
       showFlagSetDatePicker: observable,
       showFlagUnsetDatePicker: observable,
       expandedIndex: observable,
+      deleteNote: action.bound,
       toggleAccordion: action.bound,
       setAddNotesData: action.bound,
       setStudentNotes: action.bound,
@@ -74,6 +75,11 @@ class AddNotesStore {
   }
   setFlagSetDate(date: Date | null) {
     this.flagSetDate = date;
+  }
+  deleteNote(noteId: number) {
+    this.addNotesData = this.addNotesData.filter(
+      item => item.note_id !== noteId,
+    );
   }
 
   setFlagUnsetDate(date: Date | null) {

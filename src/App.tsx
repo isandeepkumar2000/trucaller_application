@@ -3,13 +3,20 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {observer} from 'mobx-react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {ActivityIndicator, View, StyleSheet} from 'react-native';
+import {
+  ActivityIndicator,
+  View,
+  StyleSheet,
+  TouchableOpacity,
+  Alert,
+} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import StudentList from './components/HomeScreen/homeScreen';
 import NotesScreen from './components/NotesScreen/notesScreen';
 import UpcomingScreen from './components/UpcomingScreen/upcomingScreen';
 import LoginScreen from './components/LoginScreen/loginFormScreen';
 import authStore from './Store/LogicAuthStore/authStore';
+import {action, runInAction} from 'mobx';
 
 const MainStack = createNativeStackNavigator();
 const AuthStack = createNativeStackNavigator();
@@ -19,10 +26,7 @@ function MainScreens() {
     <MainStack.Navigator
       screenOptions={{
         headerShown: false,
-        headerRight: () => (
-          <Icon name="power-off" size={24} color="white" style={{ marginRight: 16 }} />
-        ),
-      }} >
+      }}>
       <MainStack.Screen
         name="studentList"
         component={StudentList}
@@ -75,10 +79,44 @@ const LoaderComponent = () => (
 const App = observer(() => {
   const [isLoading, setIsLoading] = useState(true);
 
+  const handleLogout = action(async () => {
+    try {
+      Alert.alert(
+        'Logout',
+        'Are you sure you want to logout?',
+        [
+          {
+            text: 'Cancel',
+            style: 'cancel',
+          },
+          {
+            text: 'Yes',
+            onPress: async () => {
+              try {
+                await AsyncStorage.removeItem('token');
+                await AsyncStorage.removeItem('isUserLoggedIn');
+                runInAction(() => {
+                  authStore.isLoggedIn = false;
+                });
+              } catch (error) {
+                console.error(error);
+              }
+            },
+          },
+        ],
+        {cancelable: false},
+      );
+    } catch (error) {
+      console.error(error);
+    }
+  });
+
   useEffect(() => {
     AsyncStorage.getItem('isUserLoggedIn').then(isLoggedIn => {
       if (isLoggedIn === 'true') {
-        authStore.isLoggedIn = true;
+        runInAction(() => {
+          authStore.isLoggedIn = true;
+        });
       }
       setIsLoading(false);
     });
@@ -100,6 +138,11 @@ const App = observer(() => {
           <AuthStack.Screen name="Login" component={LoginScreen} />
         </AuthStack.Navigator>
       )}
+      {authStore.isLoggedIn && (
+        <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
+          <Icon name="power-off" size={22} color="white" />
+        </TouchableOpacity>
+      )}
     </NavigationContainer>
   );
 });
@@ -109,6 +152,12 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  logoutButton: {
+    position: 'absolute',
+    top: 10,
+    right: 20,
+    padding: 8,
   },
 });
 

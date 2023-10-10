@@ -54,7 +54,6 @@ const UpdateUpcomingAttendance: React.FC<UpdateUpcomingAttendanceProps> =
               ToastAndroid.LONG,
             );
           } else {
-            // const responseBody = await response.text();
             ToastAndroid.show(
               'Failed to update attendance status',
               ToastAndroid.LONG,

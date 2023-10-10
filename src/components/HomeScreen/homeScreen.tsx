@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {observer} from 'mobx-react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -64,6 +64,7 @@ const StudentList = observer(() => {
   const debouncedFetchHomePageData = debounce(fetchHomePageData, 100);
 
   const handleSearch = () => {
+    fetchHomePageData();
     if (homePageStore.searchQuery === '') {
       ToastAndroid.showWithGravity(
         'Please type at least 3 letters of your name',
@@ -74,6 +75,11 @@ const StudentList = observer(() => {
       debouncedFetchHomePageData();
     }
   };
+  useEffect(() => {
+    if (homePageStore.searchQuery.trim().length >= 3) {
+      debouncedFetchHomePageData();
+    }
+  }, [homePageStore.searchQuery]);
 
   return (
     <SafeAreaView style={[styles.saferView]}>

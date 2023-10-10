@@ -113,8 +113,6 @@ class AuthStore {
               this.errorMessage = '';
             });
             await AsyncStorage.setItem('token', responseData.token);
-
-            // Set a flag to indicate successful login
             await AsyncStorage.setItem('isUserLoggedIn', 'true');
           } else {
             runInAction(() => {
