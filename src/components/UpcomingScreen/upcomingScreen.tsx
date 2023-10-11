@@ -16,9 +16,7 @@ import {styles} from './upcomingScreenStyle';
 import {homePageStore} from '../../Store/HomePageStore/storeHomePage';
 
 const UpcomingScreen = observer(() => {
-  const imageUrl =
-    homePageStore.profilePic ||
-    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTul_uww9SaBJW6cIxV_KEOK0nabcl99DJHeA&usqp=CAU';
+  const imageUrl = homePageStore.profilePic;
 
   const route = useRoute();
   const {firstname, lastname, id, joining_date} = route.params;

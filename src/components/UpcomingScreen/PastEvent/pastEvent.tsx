@@ -132,9 +132,23 @@ const PastEvent: React.FC<PastEventProps> = observer(({id}) => {
                     </View>
 
                     {/* content starts */}
-                    <View style={[styles.lessonNoteRow]}>
+                    <View
+                      style={[
+                        styles.lessonNoteRow,
+                        {borderTopWidth: 0, paddingTop: 0, marginTop: 10},
+                      ]}>
                       {/* lesson notes section stats */}
-                      <View style={styles.lessonContent}>
+                      <View
+                        style={[
+                          styles.lessonContent,
+                          {
+                            paddingTop: 10,
+                            marginTop: 10,
+                            borderTopWidth: 1,
+                            borderColor: 'gray',
+                            borderStyle: 'dashed',
+                          },
+                        ]}>
                         <Text style={styles.sectionHeading}>Lesson Notes</Text>
 
                         {item.lesson_notes === '' ? (
@@ -164,9 +178,10 @@ const PastEvent: React.FC<PastEventProps> = observer(({id}) => {
                                 {marginBottom: 10, marginRight: 8},
                               ]}>
                               <Text
-                                style={[styles.attendenceButtonContent,
+                                style={[
+                                  styles.attendenceButtonContent,
                                   styles.buttonText,
-                                  {borderRadius: 5, },
+                                  {borderRadius: 5},
                                 ]}>
                                 {item.attendance_book}{' '}
                                 {item.attendance_book_page_no}{' '}
@@ -188,8 +203,9 @@ const PastEvent: React.FC<PastEventProps> = observer(({id}) => {
                                 {marginBottom: 0, marginRight: 8},
                               ]}>
                               <Text
-                                style={[styles.attendenceButtonContent,
-                                  styles.buttonText, 
+                                style={[
+                                  styles.attendenceButtonContent,
+                                  styles.buttonText,
                                   {
                                     borderRadius: 5,
                                     marginBottom: 0,
@@ -255,7 +271,8 @@ const PastEvent: React.FC<PastEventProps> = observer(({id}) => {
                                 {marginBottom: 10, marginRight: 8},
                               ]}>
                               <Text
-                                style={[styles.attendenceButtonContent,
+                                style={[
+                                  styles.attendenceButtonContent,
                                   styles.buttonText,
                                   {borderRadius: 5, backgroundColor: 'orange'},
                                 ]}>

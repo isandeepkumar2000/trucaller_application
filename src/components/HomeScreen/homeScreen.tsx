@@ -43,7 +43,8 @@ const StudentList = observer(() => {
         if (response.ok) {
           const responseData = await response.json();
           const students = responseData.data || [];
-          const profilePic = responseData.profile_pic;
+          const profilePic =
+            students.length > 0 ? students[0].profile_pic : null;
           homePageStore.setProfilePic(profilePic);
           homePageStore.setStudentData(students);
         } else {

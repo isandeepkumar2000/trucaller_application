@@ -17,15 +17,13 @@ interface CallLogEntry {
 const CallLogAccessFile: React.FC = () => {
   const [callLog, setCallLog] = useState<CallLogEntry[]>([]);
 
-  console.log(callLog, 'callLog');
-
-  const fetchingPastEventsData = async (callNumber: string) => {
+  const fetchingPastEventsData = async (number: string | null) => {
     try {
       const apiUrlFromStorage = await AsyncStorage.getItem('selectedItemInfo');
       if (apiUrlFromStorage) {
         const apiUrl = JSON.parse(apiUrlFromStorage).apiUrl;
         const requestBody = {
-          studentKey: callNumber,
+          studentKey: number,
         };
 
         const token = await AsyncStorage.getItem('token');
@@ -45,7 +43,6 @@ const CallLogAccessFile: React.FC = () => {
         if (response.ok) {
           const responseData = await response.json();
           const pastEventData = responseData.data || [];
-          console.log(pastEventData, 'pastEventData');
         } else {
           const errorMessage = `Error: ${response.status} - ${response.statusText}`;
           ToastAndroid.show(errorMessage, ToastAndroid.LONG);
@@ -67,7 +64,7 @@ const CallLogAccessFile: React.FC = () => {
         const callEntry: CallLogEntry = {event, number};
         setCallLog(prevCallLog => [...prevCallLog, callEntry]);
         console.log(`Event: ${event}, Number: ${number}`);
-        fetchingPastEventsData(number); // Call the function with the call number directly
+        fetchingPastEventsData(number);
       }
     };
 
@@ -94,7 +91,6 @@ const CallLogAccessFile: React.FC = () => {
           grantedCallLog === PermissionsAndroid.RESULTS.GRANTED
         ) {
           console.log('Permissions Accepted by User');
-          // Initialize the call detector
           callDetector = new CallDetectorManager(handleCallEvent, true);
         } else {
           console.log('Permissions denied by user');
@@ -104,7 +100,6 @@ const CallLogAccessFile: React.FC = () => {
       }
     };
 
-    // Request permission when the component mounts
     requestPhoneStatePermission();
 
     return () => {

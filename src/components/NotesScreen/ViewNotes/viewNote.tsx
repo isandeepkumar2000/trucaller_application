@@ -22,6 +22,8 @@ interface ViewNotesProps {
 }
 
 export const ViewNotes: React.FC<ViewNotesProps> = observer(({id}) => {
+  const [isLoadingDelete, setIsLoadingDelete] = useState(false);
+
   const fetchStudentData = async () => {
     addNotesStore.setIsLoading(true);
     try {
@@ -69,6 +71,7 @@ export const ViewNotes: React.FC<ViewNotesProps> = observer(({id}) => {
   };
 
   const deleteNote = async (noteId: number) => {
+    setIsLoadingDelete(true);
     Alert.alert(
       'Delete Note',
       'Are you sure you want to delete this note?',
@@ -84,6 +87,7 @@ export const ViewNotes: React.FC<ViewNotesProps> = observer(({id}) => {
               await performDeleteOperation(noteId);
               addNotesStore.deleteNote(noteId);
             } catch (error) {}
+            setIsLoadingDelete(false);
           },
         },
       ],

@@ -22,7 +22,6 @@ export const performDeleteOperation = async (noteId: any) => {
       });
 
       if (response.ok) {
-        console.log('Note deleted successfully');
       } else {
         console.error(`Error: ${response.status} - ${response.statusText}`);
       }

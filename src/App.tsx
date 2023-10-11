@@ -18,7 +18,6 @@ import {
   TouchableOpacity,
   Alert,
 } from 'react-native';
-import CallLogAccessFile from './components/CallLogIntercept/callLogIntercept';
 
 const MainStack = createNativeStackNavigator();
 const AuthStack = createNativeStackNavigator();
@@ -138,10 +137,10 @@ const App = observer(() => {
             headerShown: false,
           }}>
           <AuthStack.Screen name="Login" component={LoginScreen} />
-          <AuthStack.Screen
+          {/* <AuthStack.Screen
             name="CallLogAccessFile"
             component={CallLogAccessFile}
-          />
+          /> */}
         </AuthStack.Navigator>
       )}
       {authStore.isLoggedIn && (
@@ -168,17 +167,3 @@ const styles = StyleSheet.create({
 });
 
 export default App;
-
-// import {View, Text} from 'react-native';
-// import React from 'react';
-// import CallLogAccessFile from './components/CallLogIntercept/callLogIntercept';
-
-// const App = () => {
-//   return (
-//     <View>
-//       <CallLogAccessFile />
-//     </View>
-//   );
-// };
-
-// export default App;

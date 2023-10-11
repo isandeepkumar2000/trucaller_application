@@ -1,5 +1,5 @@
-import React from 'react';
-import {ToastAndroid, View} from 'react-native';
+import React, {useState} from 'react';
+import {ActivityIndicator, ToastAndroid, View} from 'react-native';
 import {Dropdown} from 'react-native-element-dropdown';
 import {observer} from 'mobx-react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -16,7 +16,9 @@ interface UpdateUpcomingAttendanceProps {
 
 const UpdateUpcomingAttendance: React.FC<UpdateUpcomingAttendanceProps> =
   observer(({eventId, attendanceApiStatus, id}) => {
+    const [isLoading, setIsLoading] = useState(false);
     const fetchingUpcomingAttendanceStatus = async (selectedItem: string) => {
+      setIsLoading(true);
       try {
         const apiUrlFromStorage = await AsyncStorage.getItem(
           'selectedItemInfo',
@@ -66,10 +68,12 @@ const UpdateUpcomingAttendance: React.FC<UpdateUpcomingAttendanceProps> =
           ToastAndroid.LONG,
         );
       }
+      setIsLoading(false);
     };
 
     return (
       <View>
+        {isLoading && <ActivityIndicator size="large" color="#B6488D" />}
         <Dropdown
           style={styles.dropdown}
           placeholderStyle={styles.placeholderStyle}
