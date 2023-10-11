@@ -1,12 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, {useEffect, useState} from 'react';
-import {
-  View,
-  Text,
-  FlatList,
-  PermissionsAndroid,
-  ToastAndroid,
-} from 'react-native';
+import {View, PermissionsAndroid, ToastAndroid, Alert} from 'react-native';
 import CallDetectorManager from 'react-native-call-detection';
 
 interface CallLogEntry {
@@ -15,15 +9,16 @@ interface CallLogEntry {
 }
 
 const CallLogAccessFile: React.FC = () => {
-  const [callLog, setCallLog] = useState<CallLogEntry[]>([]);
+  // const [callLogData, setCallLogData] = useState<[]>([]);
+  // console.log(callLogData, 'callLogData');
 
-  const fetchingPastEventsData = async (number: string | null) => {
+  const fetchingPastEventsData = async (number: string) => {
     try {
       const apiUrlFromStorage = await AsyncStorage.getItem('selectedItemInfo');
       if (apiUrlFromStorage) {
         const apiUrl = JSON.parse(apiUrlFromStorage).apiUrl;
         const requestBody = {
-          studentKey: number,
+          phone_number: number,
         };
 
         const token = await AsyncStorage.getItem('token');
@@ -39,16 +34,20 @@ const CallLogAccessFile: React.FC = () => {
             body: JSON.stringify(requestBody),
           },
         );
-
+        console.log('response Names (Console):', response);
         if (response.ok) {
           const responseData = await response.json();
-          const pastEventData = responseData.data || [];
+          const studentName = responseData.student_names;
+
+          Alert.alert('Student Name', `Student Name: ${studentName}`);
+
+          // setCallLogData(responseData);
         } else {
-          const errorMessage = `Error: ${response.status} - ${response.statusText}`;
-          ToastAndroid.show(errorMessage, ToastAndroid.LONG);
+          console.log('API Error:', response.status);
         }
       }
     } catch (error) {
+      console.error('Error fetching data:', error);
       ToastAndroid.show(
         'An error occurred while fetching data.',
         ToastAndroid.LONG,
@@ -62,7 +61,6 @@ const CallLogAccessFile: React.FC = () => {
     const handleCallEvent = (event: string, number: string | null) => {
       if (event && number) {
         const callEntry: CallLogEntry = {event, number};
-        setCallLog(prevCallLog => [...prevCallLog, callEntry]);
         console.log(`Event: ${event}, Number: ${number}`);
         fetchingPastEventsData(number);
       }
@@ -109,21 +107,7 @@ const CallLogAccessFile: React.FC = () => {
     };
   }, []);
 
-  return (
-    <View>
-      <Text>Call Log:</Text>
-      <FlatList
-        data={callLog}
-        keyExtractor={(_, index) => index.toString()}
-        renderItem={({item}) => (
-          <View>
-            <Text>Event: {item.event}</Text>
-            <Text>Number: {item.number}</Text>
-          </View>
-        )}
-      />
-    </View>
-  );
+  return <View></View>;
 };
 
 export default CallLogAccessFile;

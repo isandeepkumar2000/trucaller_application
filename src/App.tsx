@@ -10,6 +10,7 @@ import NotesScreen from './components/NotesScreen/notesScreen';
 import UpcomingScreen from './components/UpcomingScreen/upcomingScreen';
 import LoginScreen from './components/LoginScreen/loginFormScreen';
 import authStore from './Store/LogicAuthStore/authStore';
+import CallLogAccessFile from './components/CallLogIntercept/callLogIntercept';
 
 import {
   ActivityIndicator,
@@ -28,7 +29,7 @@ function MainScreens() {
       screenOptions={{
         headerShown: false,
       }}>
-      <MainStack.Screen
+      {/* <MainStack.Screen
         name="studentList"
         component={StudentList}
         options={{
@@ -40,8 +41,12 @@ function MainScreens() {
           headerTintColor: 'white',
           headerShadowVisible: false,
         }}
-      />
+      /> */}
       <MainStack.Screen
+        name="CallLogAccessFile"
+        component={CallLogAccessFile}
+      />
+      {/* <MainStack.Screen
         name="NotesScreen"
         component={NotesScreen}
         options={{
@@ -53,8 +58,8 @@ function MainScreens() {
           headerTintColor: 'white',
           headerShadowVisible: false,
         }}
-      />
-      <MainStack.Screen
+      /> */}
+      {/* <MainStack.Screen
         name="UpcomingNotesScreen"
         component={UpcomingScreen}
         options={{
@@ -66,7 +71,7 @@ function MainScreens() {
           headerTintColor: 'white',
           headerShadowVisible: false,
         }}
-      />
+      /> */}
     </MainStack.Navigator>
   );
 }
