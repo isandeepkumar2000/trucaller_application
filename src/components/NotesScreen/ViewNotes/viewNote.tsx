@@ -22,8 +22,6 @@ interface ViewNotesProps {
 }
 
 export const ViewNotes: React.FC<ViewNotesProps> = observer(({id}) => {
-  const [isLoadingDelete, setIsLoadingDelete] = useState(false);
-
   const fetchStudentData = async () => {
     addNotesStore.setIsLoading(true);
     try {
@@ -71,7 +69,6 @@ export const ViewNotes: React.FC<ViewNotesProps> = observer(({id}) => {
   };
 
   const deleteNote = async (noteId: number) => {
-    setIsLoadingDelete(true);
     Alert.alert(
       'Delete Note',
       'Are you sure you want to delete this note?',
@@ -87,7 +84,6 @@ export const ViewNotes: React.FC<ViewNotesProps> = observer(({id}) => {
               await performDeleteOperation(noteId);
               addNotesStore.deleteNote(noteId);
             } catch (error) {}
-            setIsLoadingDelete(false);
           },
         },
       ],
@@ -135,16 +131,15 @@ export const ViewNotes: React.FC<ViewNotesProps> = observer(({id}) => {
                     </TouchableOpacity>
                   </View>
                 ) : item.raised_flag === 'golden' ? (
-                  <View
+                  <TouchableOpacity
+                    onPress={() => deleteNote(item.note_id)}
                     style={[
                       styles.eventLeft,
                       {
                         backgroundColor: 'gold',
                       },
                     ]}>
-                    <TouchableOpacity
-                      onPress={() => deleteNote(item.note_id)}
-                      style={styles.iconStyle}>
+                    <TouchableOpacity style={styles.iconStyle}>
                       <Icon
                         name="trash"
                         size={20}
@@ -154,18 +149,17 @@ export const ViewNotes: React.FC<ViewNotesProps> = observer(({id}) => {
                         }}
                       />
                     </TouchableOpacity>
-                  </View>
+                  </TouchableOpacity>
                 ) : (
-                  <View
+                  <TouchableOpacity
+                    onPress={() => deleteNote(item.note_id)}
                     style={[
                       styles.eventLeft,
                       {
                         backgroundColor: item.raised_flag,
                       },
                     ]}>
-                    <TouchableOpacity
-                      onPress={() => deleteNote(item.note_id)}
-                      style={styles.iconStyle}>
+                    <TouchableOpacity style={styles.iconStyle}>
                       <Icon
                         name="trash"
                         size={20}
@@ -175,7 +169,7 @@ export const ViewNotes: React.FC<ViewNotesProps> = observer(({id}) => {
                         }}
                       />
                     </TouchableOpacity>
-                  </View>
+                  </TouchableOpacity>
                 )}
 
                 <View style={[styles.eventRight]}>
