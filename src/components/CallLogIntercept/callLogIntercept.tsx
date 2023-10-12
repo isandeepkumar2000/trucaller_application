@@ -38,8 +38,12 @@ const CallLogAccessFile: React.FC = () => {
         if (response.ok) {
           const responseData = await response.json();
           const studentName = responseData.student_names;
+          const parentName = responseData.parent_name;
 
-          Alert.alert('Student Name', `Student Name: ${studentName}`);
+          // Alert.alert(
+          //   'Student Name',
+          //   `Student Name: ${studentName} ${parentName}`,
+          // );
 
           // setCallLogData(responseData);
         } else {

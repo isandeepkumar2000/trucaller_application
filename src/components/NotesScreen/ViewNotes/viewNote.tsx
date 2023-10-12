@@ -15,13 +15,41 @@ import {
   ToastAndroid,
   Alert,
 } from 'react-native';
-import {performDeleteOperation} from '../../../utils/ApiFunctionCalls/apiFunctionCalls';
 
 interface ViewNotesProps {
   id: number;
 }
 
 export const ViewNotes: React.FC<ViewNotesProps> = observer(({id}) => {
+  const performDeleteOperation = async (noteId: any) => {
+    try {
+      const apiUrlFromStorage = await AsyncStorage.getItem('selectedItemInfo');
+      if (apiUrlFromStorage) {
+        const apiUrl = JSON.parse(apiUrlFromStorage).apiUrl;
+        const token = await AsyncStorage.getItem('token');
+        const requestBody = {
+          noteKey: noteId,
+        };
+
+        const response = await fetch(apiUrl + `delete-student-note`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(requestBody),
+        });
+
+        if (response.ok) {
+        } else {
+          console.error(`Error: ${response.status} - ${response.statusText}`);
+        }
+      }
+    } catch (error) {
+      console.error('An error occurred while deleting the note:', error);
+    }
+  };
+
   const fetchStudentData = async () => {
     addNotesStore.setIsLoading(true);
     try {
@@ -52,7 +80,7 @@ export const ViewNotes: React.FC<ViewNotesProps> = observer(({id}) => {
       }
     } catch (error) {
       ToastAndroid.show(
-        'An error occurred while fetching student data.',
+        'An error occurred while fetching student data',
         ToastAndroid.LONG,
       );
     } finally {
@@ -82,8 +110,11 @@ export const ViewNotes: React.FC<ViewNotesProps> = observer(({id}) => {
           onPress: async () => {
             try {
               await performDeleteOperation(noteId);
+              // Call the MobX store method to delete the note from the list
               addNotesStore.deleteNote(noteId);
-            } catch (error) {}
+            } catch (error) {
+              console.error('Error deleting note:', error);
+            }
           },
         },
       ],
@@ -100,7 +131,20 @@ export const ViewNotes: React.FC<ViewNotesProps> = observer(({id}) => {
           <View style={styles.container}>
             {addNotesStore.addNotesData.map((item: any, index: any) => (
               <View key={item.note_id || index} style={[styles.eventRow]}>
-                {item.raised_flag === null || item.raised_flag === '' ? (
+                {item.is_new_registration_flag === 1 ? (
+                  <TouchableOpacity
+                    onPress={() => deleteNote(item.note_id)}
+                    style={[
+                      styles.iconStyle,
+                      {
+                        backgroundColor: '#00FFFF',
+                        borderTopLeftRadius: 25,
+                        borderBottomLeftRadius: 25,
+                      },
+                    ]}>
+                    <Icon name="trash" size={20} style={{color: 'black'}} />
+                  </TouchableOpacity>
+                ) : item.raised_flag === null ? (
                   <View
                     style={[
                       styles.eventLeft,
@@ -130,7 +174,8 @@ export const ViewNotes: React.FC<ViewNotesProps> = observer(({id}) => {
                       />
                     </TouchableOpacity>
                   </View>
-                ) : item.raised_flag === 'golden' ? (
+                ) : item.raised_flag === 'golden' ||
+                  item.is_new_registration_flag === 1 ? (
                   <TouchableOpacity
                     onPress={() => deleteNote(item.note_id)}
                     style={[

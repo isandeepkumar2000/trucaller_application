@@ -1,6 +1,3 @@
-import React, {useEffect, useState} from 'react';
-import {action, runInAction} from 'mobx';
-import {observer} from 'mobx-react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -11,6 +8,9 @@ import UpcomingScreen from './components/UpcomingScreen/upcomingScreen';
 import LoginScreen from './components/LoginScreen/loginFormScreen';
 import authStore from './Store/LogicAuthStore/authStore';
 import CallLogAccessFile from './components/CallLogIntercept/callLogIntercept';
+import React, {useEffect, useState} from 'react';
+import {action, runInAction} from 'mobx';
+import {observer} from 'mobx-react';
 
 import {
   ActivityIndicator,
@@ -29,7 +29,7 @@ function MainScreens() {
       screenOptions={{
         headerShown: false,
       }}>
-      {/* <MainStack.Screen
+      <MainStack.Screen
         name="studentList"
         component={StudentList}
         options={{
@@ -41,12 +41,12 @@ function MainScreens() {
           headerTintColor: 'white',
           headerShadowVisible: false,
         }}
-      /> */}
-      <MainStack.Screen
-        name="CallLogAccessFile"
-        component={CallLogAccessFile}
       />
       {/* <MainStack.Screen
+        name="CallLogAccessFile"
+        component={CallLogAccessFile}
+      /> */}
+      <MainStack.Screen
         name="NotesScreen"
         component={NotesScreen}
         options={{
@@ -58,8 +58,8 @@ function MainScreens() {
           headerTintColor: 'white',
           headerShadowVisible: false,
         }}
-      /> */}
-      {/* <MainStack.Screen
+      />
+      <MainStack.Screen
         name="UpcomingNotesScreen"
         component={UpcomingScreen}
         options={{
@@ -71,7 +71,7 @@ function MainScreens() {
           headerTintColor: 'white',
           headerShadowVisible: false,
         }}
-      /> */}
+      />
     </MainStack.Navigator>
   );
 }
