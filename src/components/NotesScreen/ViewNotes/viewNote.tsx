@@ -110,7 +110,6 @@ export const ViewNotes: React.FC<ViewNotesProps> = observer(({id}) => {
           onPress: async () => {
             try {
               await performDeleteOperation(noteId);
-              // Call the MobX store method to delete the note from the list
               addNotesStore.deleteNote(noteId);
             } catch (error) {
               console.error('Error deleting note:', error);
