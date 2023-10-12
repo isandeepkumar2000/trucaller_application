@@ -12,11 +12,6 @@ import {action, runInAction} from 'mobx';
 import {observer} from 'mobx-react';
 import CallDetectorManager from 'react-native-call-detection';
 
-interface CallLogEntry {
-  event: string;
-  number: string;
-}
-
 import {
   ActivityIndicator,
   View,
