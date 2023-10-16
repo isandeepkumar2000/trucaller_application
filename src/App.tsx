@@ -11,7 +11,7 @@ import React, {useEffect, useState} from 'react';
 import {action, runInAction} from 'mobx';
 import {observer} from 'mobx-react';
 import CallDetectorManager from 'react-native-call-detection';
-
+import messageing from '@react-native-firebase/messaging';
 import {
   ActivityIndicator,
   View,
@@ -88,6 +88,25 @@ const LoaderComponent = () => (
 );
 
 const App = observer(() => {
+  useEffect(() => {
+    getDeviceToken();
+  }, []);
+
+  const getDeviceToken = async () => {
+    const Token = await messageing().getToken();
+    console.log(Token), 'i am firebase token';
+  };
+
+  useEffect(() => {
+    const unsubscribe = messageing().onMessage(async (remoteMessage: any) => {
+      Alert.alert(
+        'A new FCM message arrived! in forground mode',
+        JSON.stringify(remoteMessage),
+      );
+    });
+
+    return unsubscribe;
+  }, []);
   useEffect(() => {
     let callDetector: CallDetectorManager | null = null;
 
@@ -387,3 +406,14 @@ const styles = StyleSheet.create({
 });
 
 export default App;
+
+// const {notification, messageId} = remoteMessage;
+// PushNotification.localNotification({
+//   channelId: 'Vismaad Caller',
+//   id: messageId,
+//   body: 'android only',
+//   title: 'android notif title',
+//   soundName: 'default',
+//   vibrate: true,
+//   playSound: true,
+// });
