@@ -16,11 +16,9 @@ import {
   ActivityIndicator,
   View,
   StyleSheet,
-  TouchableOpacity,
   Alert,
   PermissionsAndroid,
   Text,
-  TouchableHighlight,
   Modal,
   ToastAndroid,
 } from 'react-native';
@@ -28,6 +26,11 @@ import callStore, {
   fetchingPastEventsData,
 } from './Store/CallLogsStore/callLogsStore';
 import {homePageStore} from './Store/HomePageStore/storeHomePage';
+import {Pressable} from 'react-native';
+import {
+  NotificationListner,
+  getFCMToken,
+} from './utils/NotificationService/notificationService';
 
 const MainStack = createNativeStackNavigator();
 const AuthStack = createNativeStackNavigator();
@@ -89,24 +92,10 @@ const LoaderComponent = () => (
 
 const App = observer(() => {
   useEffect(() => {
-    getDeviceToken();
+    getFCMToken();
+    NotificationListner();
   }, []);
 
-  const getDeviceToken = async () => {
-    const Token = await messageing().getToken();
-    console.log(Token), 'i am firebase token';
-  };
-
-  useEffect(() => {
-    const unsubscribe = messageing().onMessage(async (remoteMessage: any) => {
-      Alert.alert(
-        'A new FCM message arrived! in forground mode',
-        JSON.stringify(remoteMessage),
-      );
-    });
-
-    return unsubscribe;
-  }, []);
   useEffect(() => {
     let callDetector: CallDetectorManager | null = null;
 
@@ -218,9 +207,9 @@ const App = observer(() => {
         </AuthStack.Navigator>
       )}
       {authStore.isLoggedIn && (
-        <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
+        <Pressable style={styles.logoutButton} onPress={handleLogout}>
           <Icon name="power-off" size={22} color="white" />
-        </TouchableOpacity>
+        </Pressable>
       )}
       <Modal
         animationType="slide"
@@ -311,7 +300,7 @@ const App = observer(() => {
                 padding: 20,
                 paddingTop: 0,
               }}>
-              <TouchableHighlight
+              <Pressable
                 style={[
                   styles.viewDetailsButton,
                   {width: '48%', alignItems: 'center'},
@@ -333,8 +322,8 @@ const App = observer(() => {
                   style={{color: '#FFFFFF', fontSize: 16, fontWeight: 'bold'}}>
                   View Details
                 </Text>
-              </TouchableHighlight>
-              <TouchableHighlight
+              </Pressable>
+              <Pressable
                 style={[
                   styles.closeButton,
                   {
@@ -349,7 +338,7 @@ const App = observer(() => {
                   style={{color: '#FFFFFF', fontSize: 16, fontWeight: 'bold'}}>
                   Close
                 </Text>
-              </TouchableHighlight>
+              </Pressable>
             </View>
           </View>
         </View>

@@ -2,9 +2,11 @@ import {makeObservable, observable, action, runInAction} from 'mobx';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {data} from '../../utils/Api_Drop_Down_Menu/api_Url_Drop_Down_Menu';
 import {ToastAndroid} from 'react-native';
-
+import messaging from '@react-native-firebase/messaging';
 class AuthStore {
   email: string = '';
+  device_type: string = '';
+  device_token: string = '';
   password: string = '';
   isLoggedIn: boolean = false;
   errorMessage: string = '';
@@ -26,8 +28,12 @@ class AuthStore {
       isLoading: observable,
       selectedItem: observable,
       locationData: observable,
+      device_token: observable,
+      device_type: observable,
 
       setModalVisible: action.bound,
+      setDevice_token: action.bound,
+      setDevice_type: action.bound,
       setEmail: action.bound,
       setPassword: action.bound,
       togglePasswordVisibility: action.bound,
@@ -45,6 +51,13 @@ class AuthStore {
   }
 
   setEmail(email: string) {
+    this.email = email;
+  }
+
+  setDevice_token(device_token: string) {
+    this.device_token = device_token;
+  }
+  setDevice_type(email: string) {
     this.email = email;
   }
 
@@ -94,6 +107,11 @@ class AuthStore {
       if (selectedLocationObject) {
         const apiUrl = selectedLocationObject.apiUrl + 'user-login';
 
+        const FCMToken = await messaging().getToken();
+        const deviceType = 'android';
+
+        await AsyncStorage.setItem('deviceType', deviceType);
+
         const response = await fetch(apiUrl, {
           method: 'POST',
           headers: {
@@ -102,9 +120,10 @@ class AuthStore {
           body: JSON.stringify({
             email: this.email,
             password: this.password,
+            device_type: deviceType,
+            device_token: FCMToken,
           }),
         });
-
         if (response.status === 200) {
           const responseData = await response.json();
           if (responseData.status === 'Success') {
