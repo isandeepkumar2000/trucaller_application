@@ -395,14 +395,3 @@ const styles = StyleSheet.create({
 });
 
 export default App;
-
-// const {notification, messageId} = remoteMessage;
-// PushNotification.localNotification({
-//   channelId: 'Vismaad Caller',
-//   id: messageId,
-//   body: 'android only',
-//   title: 'android notif title',
-//   soundName: 'default',
-//   vibrate: true,
-//   playSound: true,
-// });
