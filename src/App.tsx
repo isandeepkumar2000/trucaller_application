@@ -11,7 +11,7 @@ import React, {useEffect, useState} from 'react';
 import {action, runInAction} from 'mobx';
 import {observer} from 'mobx-react';
 import CallDetectorManager from 'react-native-call-detection';
-import messageing from '@react-native-firebase/messaging';
+
 import {
   ActivityIndicator,
   View,
