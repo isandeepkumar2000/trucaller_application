@@ -120,15 +120,19 @@ const App = observer(() => {
           PermissionsAndroid.PERMISSIONS.READ_PHONE_STATE,
           rationale,
         );
+        const grantedNotification = await PermissionsAndroid.request(
+          PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS,
+          rationale,
+        );
 
         const grantedCallLog = await PermissionsAndroid.request(
           PermissionsAndroid.PERMISSIONS.READ_CALL_LOG,
           rationale,
         );
-
         if (
           grantedPhoneState === PermissionsAndroid.RESULTS.GRANTED &&
-          grantedCallLog === PermissionsAndroid.RESULTS.GRANTED
+          grantedCallLog === PermissionsAndroid.RESULTS.GRANTED &&
+          grantedNotification === PermissionsAndroid.RESULTS.GRANTED
         ) {
           console.log('Permissions Accepted by User');
           callDetector = new CallDetectorManager(handleCallEvent, true);
