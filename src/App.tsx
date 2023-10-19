@@ -30,6 +30,7 @@ import {Pressable} from 'react-native';
 import {
   NotificationListner,
   getFCMToken,
+  requestUserPermission,
 } from './utils/NotificationService/notificationService';
 
 const MainStack = createNativeStackNavigator();
@@ -92,6 +93,7 @@ const LoaderComponent = () => (
 
 const App = observer(() => {
   useEffect(() => {
+    requestUserPermission();
     getFCMToken();
     NotificationListner();
   }, []);
@@ -343,6 +345,7 @@ const App = observer(() => {
           </View>
         </View>
       </Modal>
+      {/* <ForgroundHandler /> */}
     </NavigationContainer>
   );
 });

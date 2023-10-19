@@ -1,16 +1,22 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import messaging from '@react-native-firebase/messaging';
+// import {useEffect} from 'react';
 import {Alert} from 'react-native';
+// import PushNotification from 'react-native-push-notification';
 
 export async function requestUserPermission() {
-  const authStatus = await messaging().requestPermission();
-  const enabled =
-    authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
-    authStatus === messaging.AuthorizationStatus.PROVISIONAL;
+  try {
+    const authStatus = await messaging().requestPermission();
+    const enabled =
+      authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+      authStatus === messaging.AuthorizationStatus.PROVISIONAL;
 
-  if (enabled) {
-    console.log('Authorization status:', authStatus);
-    getFCMToken();
+    if (enabled) {
+      console.log('Authorization status:', authStatus);
+      getFCMToken();
+    }
+  } catch (error) {
+    console.error('Error requesting permission:', error);
   }
 }
 
@@ -19,7 +25,9 @@ export const getFCMToken = async () => {
   console.log(FCMToken, 'the old Token');
   if (!FCMToken) {
     try {
+      await messaging().registerDeviceForRemoteMessages();
       const FCMToken = await messaging().getToken();
+
       if (FCMToken) {
         console.log('the New Generate FCM token status get:', FCMToken);
         await AsyncStorage.setItem('FcmToken', FCMToken);
