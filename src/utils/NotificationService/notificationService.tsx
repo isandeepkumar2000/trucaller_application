@@ -1,8 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import messaging from '@react-native-firebase/messaging';
-// import {useEffect} from 'react';
-import {Alert} from 'react-native';
-// import PushNotification from 'react-native-push-notification';
 
 export async function requestUserPermission() {
   try {
@@ -48,10 +45,6 @@ export const NotificationListner = async () => {
 
   messaging().onMessage(async remoteMessage => {
     console.log('received in forground remoteMessage', remoteMessage);
-    Alert.alert(
-      'A new FCM message arrived! in forground mode',
-      JSON.stringify(remoteMessage),
-    );
   });
 
   messaging()
