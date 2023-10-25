@@ -7,7 +7,7 @@ import NotesScreen from './components/NotesScreen/notesScreen';
 import UpcomingScreen from './components/UpcomingScreen/upcomingScreen';
 import LoginScreen from './components/LoginScreen/loginFormScreen';
 import authStore from './Store/LogicAuthStore/authStore';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {action, runInAction} from 'mobx';
 import {observer} from 'mobx-react';
 import CallDetectorManager from 'react-native-call-detection';
@@ -29,7 +29,6 @@ import {homePageStore} from './Store/HomePageStore/storeHomePage';
 import {Pressable} from 'react-native';
 import {
   NotificationListner,
-  getFCMToken,
   requestUserPermission,
 } from './utils/NotificationService/notificationService';
 
@@ -94,11 +93,16 @@ const LoaderComponent = () => (
 const App = observer(() => {
   useEffect(() => {
     requestUserPermission();
-    getFCMToken();
     NotificationListner();
   }, []);
 
   useEffect(() => {
+    36;
+    3;
+
+    36;
+    3;
+
     let callDetector: CallDetectorManager | null = null;
 
     const handleCallEvent = (event: string, number: string | null) => {
@@ -120,10 +124,10 @@ const App = observer(() => {
           PermissionsAndroid.PERMISSIONS.READ_PHONE_STATE,
           rationale,
         );
-        const grantedNotification = await PermissionsAndroid.request(
-          PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS,
-          rationale,
-        );
+        // const grantedNotification = await PermissionsAndroid.request(
+        //   PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS,
+        //   rationale,
+        // );
 
         const grantedCallLog = await PermissionsAndroid.request(
           PermissionsAndroid.PERMISSIONS.READ_CALL_LOG,
@@ -131,8 +135,8 @@ const App = observer(() => {
         );
         if (
           grantedPhoneState === PermissionsAndroid.RESULTS.GRANTED &&
-          grantedCallLog === PermissionsAndroid.RESULTS.GRANTED &&
-          grantedNotification === PermissionsAndroid.RESULTS.GRANTED
+          grantedCallLog === PermissionsAndroid.RESULTS.GRANTED
+          // grantedNotification === PermissionsAndroid.RESULTS.GRANTED
         ) {
           console.log('Permissions Accepted by User');
           callDetector = new CallDetectorManager(handleCallEvent, true);
