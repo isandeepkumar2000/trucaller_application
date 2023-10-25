@@ -97,12 +97,6 @@ const App = observer(() => {
   }, []);
 
   useEffect(() => {
-    36;
-    3;
-
-    36;
-    3;
-
     let callDetector: CallDetectorManager | null = null;
 
     const handleCallEvent = (event: string, number: string | null) => {
