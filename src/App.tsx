@@ -125,10 +125,8 @@ const App = observer(() => {
             PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS,
           );
         }
-
         const grantedPermissions = await PermissionsAndroid.requestMultiple(
           permissionsToRequest,
-          rationale,
         );
 
         const allPermissionsGranted = Object.values(grantedPermissions).every(
