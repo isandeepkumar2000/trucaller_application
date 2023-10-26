@@ -21,6 +21,7 @@ import {
   Text,
   Modal,
   ToastAndroid,
+  Platform,
 } from 'react-native';
 import callStore, {
   fetchingPastEventsData,
@@ -118,10 +119,10 @@ const App = observer(() => {
           PermissionsAndroid.PERMISSIONS.READ_PHONE_STATE,
           rationale,
         );
-        // const grantedNotification = await PermissionsAndroid.request(
-        //   PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS,
-        //   rationale,
-        // );
+        const grantedNotification = await PermissionsAndroid.request(
+          PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS,
+          rationale,
+        );
 
         const grantedCallLog = await PermissionsAndroid.request(
           PermissionsAndroid.PERMISSIONS.READ_CALL_LOG,
@@ -129,8 +130,8 @@ const App = observer(() => {
         );
         if (
           grantedPhoneState === PermissionsAndroid.RESULTS.GRANTED &&
-          grantedCallLog === PermissionsAndroid.RESULTS.GRANTED
-          // grantedNotification === PermissionsAndroid.RESULTS.GRANTED
+          grantedCallLog === PermissionsAndroid.RESULTS.GRANTED &&
+          grantedNotification === PermissionsAndroid.RESULTS.GRANTED
         ) {
           console.log('Permissions Accepted by User');
           callDetector = new CallDetectorManager(handleCallEvent, true);
@@ -143,6 +144,65 @@ const App = observer(() => {
     };
 
     requestPhoneStatePermission();
+
+    return () => {
+      if (callDetector) {
+        callDetector.dispose();
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    let callDetector: CallDetectorManager | null = null;
+
+    const handleCallEvent = (event: string, number: string | null) => {
+      if (event && number) {
+        console.log(`Event: ${event}, Number: ${number}`);
+        fetchingPastEventsData(number);
+      }
+    };
+
+    const requestPermissions = async () => {
+      try {
+        const rationale: PermissionsAndroid.Rationale = {
+          title: 'Phone State Permission',
+          message: 'This app needs access to your phone state and call logs',
+          buttonPositive: 'OK',
+        };
+
+        const permissionsToRequest = [
+          PermissionsAndroid.PERMISSIONS.READ_PHONE_STATE,
+          PermissionsAndroid.PERMISSIONS.READ_CALL_LOG,
+        ];
+
+        if (Platform.OS === 'android' && Platform.Version >= 33) {
+          permissionsToRequest.push(
+            PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS,
+          );
+        }
+
+        const grantedPermissions = await PermissionsAndroid.requestMultiple(
+          permissionsToRequest,
+          rationale,
+        );
+
+        const allPermissionsGranted = Object.values(grantedPermissions).every(
+          permissionStatus =>
+            permissionStatus === PermissionsAndroid.RESULTS.GRANTED,
+        );
+
+        if (allPermissionsGranted) {
+          console.log('Permissions Accepted by User');
+          callDetector = new CallDetectorManager(handleCallEvent, true);
+        } else {
+          console.log('Some permissions were denied by user');
+        }
+      } catch (error) {
+        console.error('Error requesting permissions:', error);
+      }
+    };
+
+    requestPermissions();
 
     return () => {
       if (callDetector) {
