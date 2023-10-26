@@ -107,61 +107,6 @@ const App = observer(() => {
       }
     };
 
-    const requestPhoneStatePermission = async () => {
-      try {
-        const rationale: PermissionsAndroid.Rationale = {
-          title: 'Phone State Permission',
-          message: 'This app needs access to your phone state and call logs',
-          buttonPositive: 'OK',
-        };
-
-        const grantedPhoneState = await PermissionsAndroid.request(
-          PermissionsAndroid.PERMISSIONS.READ_PHONE_STATE,
-          rationale,
-        );
-        const grantedNotification = await PermissionsAndroid.request(
-          PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS,
-          rationale,
-        );
-
-        const grantedCallLog = await PermissionsAndroid.request(
-          PermissionsAndroid.PERMISSIONS.READ_CALL_LOG,
-          rationale,
-        );
-        if (
-          grantedPhoneState === PermissionsAndroid.RESULTS.GRANTED &&
-          grantedCallLog === PermissionsAndroid.RESULTS.GRANTED &&
-          grantedNotification === PermissionsAndroid.RESULTS.GRANTED
-        ) {
-          console.log('Permissions Accepted by User');
-          callDetector = new CallDetectorManager(handleCallEvent, true);
-        } else {
-          console.log('Permissions denied by user');
-        }
-      } catch (error) {
-        console.error('Error requesting permissions:', error);
-      }
-    };
-
-    requestPhoneStatePermission();
-
-    return () => {
-      if (callDetector) {
-        callDetector.dispose();
-      }
-    };
-  }, []);
-
-  useEffect(() => {
-    let callDetector: CallDetectorManager | null = null;
-
-    const handleCallEvent = (event: string, number: string | null) => {
-      if (event && number) {
-        console.log(`Event: ${event}, Number: ${number}`);
-        fetchingPastEventsData(number);
-      }
-    };
-
     const requestPermissions = async () => {
       try {
         const rationale: PermissionsAndroid.Rationale = {
