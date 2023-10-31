@@ -5,7 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import debounce from 'lodash.debounce';
 import NoDataFound from '../../Images/no_data_found.png';
 import {styles} from './homeScreenStyle';
-import StudentListComponent from './StudentList/studentList';
+
 import {homePageStore} from '../../Store/HomePageStore/storeHomePage';
 
 import {
@@ -18,8 +18,9 @@ import {
   ToastAndroid,
   Image,
 } from 'react-native';
+import {StudentListComponent} from './StudentList/studentList';
 
-const StudentList = observer(() => {
+export const StudentList = observer(() => {
   const fetchHomePageData = async () => {
     homePageStore.setIsLoading(true);
     try {
@@ -145,5 +146,3 @@ const StudentList = observer(() => {
     </SafeAreaView>
   );
 });
-
-export default StudentList;

@@ -19,7 +19,7 @@ interface PastEventProps {
   id: number;
 }
 
-const PastEvent: React.FC<PastEventProps> = observer(({id}) => {
+export const PastEvent: React.FC<PastEventProps> = observer(({id}) => {
   const toggleAccordion = (index: any) => {
     if (upcomingEventStore.expandedIndex === index) {
       upcomingEventStore.setExpandedIndex(null);
@@ -293,5 +293,3 @@ const PastEvent: React.FC<PastEventProps> = observer(({id}) => {
     </SafeAreaView>
   );
 });
-
-export default PastEvent;

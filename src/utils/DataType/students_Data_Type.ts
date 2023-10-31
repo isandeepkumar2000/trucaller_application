@@ -1,4 +1,4 @@
-// Define and export ParentDetails interface
+
 export interface ParentDetails {
   type: number;
   firstname: string;
@@ -8,7 +8,7 @@ export interface ParentDetails {
   phone: string;
 }
 
-// Define and export Student interface
+
 export interface Student {
   id: number;
   firstname: string;

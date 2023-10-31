@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.projectName">
+    package="com.callervismaad">
 
     <!-- Permissions -->
     <uses-permission android:name="android.permission.INTERNET" />
@@ -10,8 +10,8 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:minSdkVersion="34" android:name="android.permission.USE_EXACT_ALARM" />
 
-   
 
     <!-- Application -->
     <application
@@ -21,6 +21,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:allowBackup="false"
         tools:replace="android:allowBackup"
+        android:showWhenLocked="true"
+        android:turnScreenOn="true"
         android:theme="@style/AppTheme">
 
         <!-- Main Activity -->

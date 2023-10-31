@@ -2,16 +2,25 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import StudentList from './components/HomeScreen/homeScreen';
+
 import NotesScreen from './components/NotesScreen/notesScreen';
 import UpcomingScreen from './components/UpcomingScreen/upcomingScreen';
-import LoginScreen from './components/LoginScreen/loginFormScreen';
-import authStore from './Store/LogicAuthStore/authStore';
+
 import React, {useEffect} from 'react';
 import {action, runInAction} from 'mobx';
 import {observer} from 'mobx-react';
+import {homePageStore} from './Store/HomePageStore/storeHomePage';
+import {Pressable} from 'react-native';
+import {
+  NotificationListener,
+  requestUserPermission,
+} from './utils/NotificationService/notificationService';
+import {
+  callStore,
+  fetchingPastEventsData,
+} from './Store/CallLogsStore/callLogsStore';
+import {authStore} from './Store/LogicAuthStore/authStore';
 import CallDetectorManager from 'react-native-call-detection';
-
 import {
   ActivityIndicator,
   View,
@@ -23,15 +32,8 @@ import {
   ToastAndroid,
   Platform,
 } from 'react-native';
-import callStore, {
-  fetchingPastEventsData,
-} from './Store/CallLogsStore/callLogsStore';
-import {homePageStore} from './Store/HomePageStore/storeHomePage';
-import {Pressable} from 'react-native';
-import {
-  NotificationListner,
-  requestUserPermission,
-} from './utils/NotificationService/notificationService';
+import {LoginScreen} from './components/LoginScreen/loginFormScreen';
+import {StudentList} from './components/HomeScreen/homeScreen';
 
 const MainStack = createNativeStackNavigator();
 const AuthStack = createNativeStackNavigator();
@@ -94,7 +96,7 @@ const LoaderComponent = () => (
 const App = observer(() => {
   useEffect(() => {
     requestUserPermission();
-    NotificationListner();
+    NotificationListener();
   }, []);
 
   useEffect(() => {
@@ -350,7 +352,6 @@ const App = observer(() => {
           </View>
         </View>
       </Modal>
-      {/* <ForgroundHandler /> */}
     </NavigationContainer>
   );
 });
@@ -402,4 +403,5 @@ const styles = StyleSheet.create({
   },
 });
 
+// export default App;
 export default App;

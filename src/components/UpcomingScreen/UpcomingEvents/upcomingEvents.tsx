@@ -1,7 +1,6 @@
 import React, {useEffect} from 'react';
 import {observer} from 'mobx-react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import UpdateUpcomingAttendance from '../../UpdateAttendanceScreen/updateUpcomingAttendance';
 
 import {
   View,
@@ -13,11 +12,12 @@ import {
 } from 'react-native';
 import {upcomingEventStore} from '../../../Store/UpcomingEventStore/upComingEventStore';
 import {styles} from './upcomingEventStyle';
+import {UpdateUpcomingAttendance} from '../../UpdateAttendanceScreen/updateUpcomingAttendance';
 interface UpcomingEventProps {
   id: number;
 }
 
-const UpcomingEvents: React.FC<UpcomingEventProps> = observer(({id}) => {
+export const UpcomingEvents: React.FC<UpcomingEventProps> = observer(({id}) => {
   const fetchingPastEventsData = async () => {
     upcomingEventStore.setIsLoading(true);
     try {
@@ -120,5 +120,3 @@ const UpcomingEvents: React.FC<UpcomingEventProps> = observer(({id}) => {
     </SafeAreaView>
   );
 });
-
-export default UpcomingEvents;

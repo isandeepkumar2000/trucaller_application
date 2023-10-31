@@ -13,8 +13,8 @@ interface StudentListComponentProps {
   fetchedDataa: Student[];
 }
 
-const StudentListComponent: React.FC<StudentListComponentProps> = observer(
-  ({fetchedDataa}) => {
+export const StudentListComponent: React.FC<StudentListComponentProps> =
+  observer(({fetchedDataa}) => {
     const navigation = useNavigation();
 
     const handleAddNotes = (
@@ -286,7 +286,4 @@ const StudentListComponent: React.FC<StudentListComponentProps> = observer(
         ))}
       </>
     );
-  },
-);
-
-export default StudentListComponent;
+  });

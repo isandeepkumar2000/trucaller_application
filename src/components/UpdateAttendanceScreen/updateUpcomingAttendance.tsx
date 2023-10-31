@@ -14,7 +14,7 @@ interface UpdateUpcomingAttendanceProps {
   attendanceApiStatus: string;
 }
 
-const UpdateUpcomingAttendance: React.FC<UpdateUpcomingAttendanceProps> =
+export const UpdateUpcomingAttendance: React.FC<UpdateUpcomingAttendanceProps> =
   observer(({eventId, attendanceApiStatus, id}) => {
     const [isLoading, setIsLoading] = useState(false);
     const fetchingUpcomingAttendanceStatus = async (selectedItem: string) => {
@@ -107,5 +107,3 @@ const UpdateUpcomingAttendance: React.FC<UpdateUpcomingAttendanceProps> =
       </View>
     );
   });
-
-export default UpdateUpcomingAttendance;

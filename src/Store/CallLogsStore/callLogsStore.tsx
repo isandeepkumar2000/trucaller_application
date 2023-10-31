@@ -36,8 +36,7 @@ class CallStore {
   }
 }
 
-const callStore = new CallStore();
-export default callStore;
+export const callStore = new CallStore();
 
 export const fetchingPastEventsData = async (number: string) => {
   try {
@@ -64,6 +63,7 @@ export const fetchingPastEventsData = async (number: string) => {
 
       if (response.ok) {
         const responseData = await response.json();
+        console.log(responseData, 'call log response data');
         const studentName = responseData.student_names;
         const parentName = responseData.parent_name;
 

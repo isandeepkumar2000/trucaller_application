@@ -1,8 +1,7 @@
 import React, {useState} from 'react';
 import {useRoute} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import PastEvent from './PastEvent/pastEvent';
-import UpcomingEvents from './UpcomingEvents/upcomingEvents';
+
 import {observer} from 'mobx-react';
 import {
   Image,
@@ -14,6 +13,8 @@ import {
 } from 'react-native';
 import {styles} from './upcomingScreenStyle';
 import {homePageStore} from '../../Store/HomePageStore/storeHomePage';
+import {UpcomingEvents} from './UpcomingEvents/upcomingEvents';
+import {PastEvent} from './PastEvent/pastEvent';
 
 const UpcomingScreen = observer(() => {
   const imageUrl = homePageStore.profilePic;

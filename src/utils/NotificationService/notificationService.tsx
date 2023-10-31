@@ -1,5 +1,8 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import messaging from '@react-native-firebase/messaging';
+import messaging, {
+  FirebaseMessagingTypes,
+} from '@react-native-firebase/messaging';
+import notifee, {AndroidColor, AndroidImportance} from '@notifee/react-native';
 
 export async function requestUserPermission() {
   try {
@@ -35,17 +38,22 @@ export const getFCMToken = async () => {
   }
 };
 
-export const NotificationListner = async () => {
-  messaging().onNotificationOpenedApp(remoteMessage => {
-    console.log(
-      'Notification caused app to open from background state:',
-      remoteMessage.notification,
-    );
-  });
+export const NotificationListener = async () => {
+  messaging().onNotificationOpenedApp(
+    async (remoteMessage: FirebaseMessagingTypes.RemoteMessage) => {
+      console.log(
+        'Notification caused app to open from background state:',
+        remoteMessage.notification,
+      );
+    },
+  );
 
-  messaging().onMessage(async remoteMessage => {
-    console.log('received in forground remoteMessage', remoteMessage);
-  });
+  messaging().onMessage(
+    async (remoteMessage: FirebaseMessagingTypes.RemoteMessage) => {
+      console.log('received in foreground remoteMessage', remoteMessage);
+      displayNotification(remoteMessage);
+    },
+  );
 
   messaging()
     .getInitialNotification()
@@ -57,4 +65,27 @@ export const NotificationListner = async () => {
         );
       }
     });
+};
+
+export const displayNotification = async (
+  notification: FirebaseMessagingTypes.RemoteMessage,
+) => {
+  const channelId = await notifee.createChannel({
+    id: 'default',
+    name: 'Default Channel',
+    importance: AndroidImportance.HIGH,
+  });
+
+  await notifee.displayNotification({
+    title: notification.notification?.title ?? 'Default Title',
+    body: notification.notification?.body ?? 'Default Body',
+    android: {
+      channelId,
+      asForegroundService: true,
+      color: AndroidColor.RED,
+      colorized: true,
+      timestamp: Date.now(),
+      showTimestamp: true,
+    },
+  });
 };

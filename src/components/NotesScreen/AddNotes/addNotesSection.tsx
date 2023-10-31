@@ -25,7 +25,7 @@ interface AddNotesProps {
   id: number;
 }
 
-const AddNotesSection: React.FC<AddNotesProps> = observer(({id}) => {
+export const AddNotesSection: React.FC<AddNotesProps> = observer(({id}) => {
   const [minUnsetDate, setMinUnsetDate] = useState<Date>(new Date());
   const [isLoading, setIsLoading] = useState(false);
   const navigation = useNavigation();
@@ -362,5 +362,3 @@ const AddNotesSection: React.FC<AddNotesProps> = observer(({id}) => {
     </View>
   );
 });
-
-export default AddNotesSection;

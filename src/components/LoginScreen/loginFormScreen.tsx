@@ -17,13 +17,13 @@ import {
   ActivityIndicator,
   ToastAndroid,
 } from 'react-native';
-import authStore from '../../Store/LogicAuthStore/authStore';
+import {authStore} from '../../Store/LogicAuthStore/authStore';
 
 type LoginScreenProps = {
   navigation: any;
 };
 
-const LoginScreen = observer(({navigation}: LoginScreenProps) => {
+export const LoginScreen = observer(({navigation}: LoginScreenProps) => {
   const handleLogin = async () => {
     if (!authStore.email || !authStore.password || !authStore.selectedItem) {
       ToastAndroid.showWithGravity(
@@ -164,5 +164,3 @@ const LoginScreen = observer(({navigation}: LoginScreenProps) => {
     </SafeAreaView>
   );
 });
-
-export default LoginScreen;
