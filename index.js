@@ -3,6 +3,7 @@ import messaging from '@react-native-firebase/messaging';
 import notifee, {AndroidImportance, AndroidColor} from '@notifee/react-native';
 import {name as appName} from './app.json';
 import App from './src/App';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 notifee.onBackgroundEvent(async event => {
   console.log('Background Event:', event);
@@ -16,8 +17,16 @@ notifee.onBackgroundEvent(async event => {
 });
 
 messaging().setBackgroundMessageHandler(async remoteMessage => {
-  console.log('Message handled in the background:', remoteMessage);
-  displayNotification(remoteMessage.data);
+  console.log(
+    'Message handled in the background:',
+    JSON.stringify(remoteMessage),
+  );
+  displayNotification(remoteMessage);
+
+  const {body, title} = remoteMessage.notification;
+
+  await AsyncStorage.setItem('notificationBody', body);
+  await AsyncStorage.setItem('notificationTitle', title);
 });
 
 notifee.registerForegroundService(async notification => {
@@ -44,10 +53,13 @@ const displayNotification = async notificationData => {
     name: 'Default Channel',
     importance: AndroidImportance.HIGH,
   });
-
+  const storedNotificationTitle = await AsyncStorage.getItem(
+    'notificationTitle',
+  );
+  const storedNotificationBody = await AsyncStorage.getItem('notificationBody');
   await notifee.displayNotification({
-    title: notificationData.title ?? 'Hello Duniya',
-    body: notificationData.body ?? 'Ohh No!',
+    title: notificationData.title ?? storedNotificationTitle,
+    body: notificationData.body ?? storedNotificationBody,
     android: {
       channelId,
       // asForegroundService: true,
