@@ -105,7 +105,7 @@ const App = observer(() => {
     const handleCallEvent = (event: string, number: string | null) => {
       if (event && number) {
         console.log(`Event: ${event}, Number: ${number}`);
-        fetchingPastEventsData(number);
+        fetchingPastEventsData(number, event);
       }
     };
 

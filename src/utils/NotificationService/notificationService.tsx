@@ -81,7 +81,6 @@ export const displayNotification = async (
     body: notification.notification?.body ?? 'Default Body',
     android: {
       channelId,
-      // asForegroundService: true,
       color: AndroidColor.RED,
       colorized: true,
       timestamp: Date.now(),

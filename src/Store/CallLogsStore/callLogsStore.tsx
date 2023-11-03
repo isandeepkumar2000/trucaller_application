@@ -38,13 +38,14 @@ class CallStore {
 
 export const callStore = new CallStore();
 
-export const fetchingPastEventsData = async (number: string) => {
+export const fetchingPastEventsData = async (number: string, event: string) => {
   try {
     const apiUrlFromStorage = await AsyncStorage.getItem('selectedItemInfo');
     if (apiUrlFromStorage) {
       const apiUrl = JSON.parse(apiUrlFromStorage).apiUrl;
       const requestBody = {
         phone_number: number,
+        event: event,
       };
 
       const token = await AsyncStorage.getItem('token');
@@ -63,7 +64,7 @@ export const fetchingPastEventsData = async (number: string) => {
 
       if (response.ok) {
         const responseData = await response.json();
-        console.log(responseData, 'call log response data');
+        // console.log(responseData, 'call log response data');
         const studentName = responseData.student_names;
         const parentName = responseData.parent_name;
 

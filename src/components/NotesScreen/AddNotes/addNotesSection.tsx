@@ -115,7 +115,7 @@ export const AddNotesSection: React.FC<AddNotesProps> = observer(({id}) => {
   };
 
   const handleSubmit = async () => {
-    setIsLoading(true);
+    // setIsLoading(true);
     try {
       if (!studentNotes) {
         ToastAndroid.showWithGravity(

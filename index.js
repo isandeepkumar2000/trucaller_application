@@ -29,24 +29,6 @@ messaging().setBackgroundMessageHandler(async remoteMessage => {
   await AsyncStorage.setItem('notificationTitle', title);
 });
 
-notifee.registerForegroundService(async notification => {
-  return new Promise(() => {
-    console.log('Foreground Service Notification:', notification);
-
-    notifee.displayNotification({
-      id: notification.id,
-      title: notification.title,
-      body: notification.body,
-      android: {
-        channelId: 'default',
-        asForegroundService: true,
-        color: AndroidColor.RED,
-        importance: AndroidImportance.HIGH,
-      },
-    });
-  });
-});
-
 const displayNotification = async notificationData => {
   const channelId = await notifee.createChannel({
     id: 'default',
@@ -62,7 +44,6 @@ const displayNotification = async notificationData => {
     body: notificationData.body ?? storedNotificationBody,
     android: {
       channelId,
-      // asForegroundService: true,
       color: AndroidColor.RED,
       importance: AndroidImportance.HIGH,
       showTimestamp: true,
