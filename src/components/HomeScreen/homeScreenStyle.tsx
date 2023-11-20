@@ -4,7 +4,10 @@ export const styles = StyleSheet.create({
   parentRow: {
     backgroundColor: '#D9EFFF',
     padding: 20,
-    borderRadius: 10,
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
+    borderBottomRightRadius: 10,
+    borderBottomLeftRadius: 10,
     marginBottom: 20,
   },
   saferView: {
@@ -13,10 +16,11 @@ export const styles = StyleSheet.create({
   },
   container: {
     padding: 20,
+    // backgroundColor: 'red',
   },
   inputStyles: {
     width: '90%',
-    height: 67,
+    height: 55,
     paddingRight: 20,
     fontSize: 18,
   },

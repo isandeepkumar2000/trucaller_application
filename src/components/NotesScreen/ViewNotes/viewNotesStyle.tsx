@@ -15,7 +15,11 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     flexGrow: 1,
     backgroundColor: '#D9EFFF',
-    borderRadius: 25,
+
+    borderTopLeftRadius: 25,
+    borderTopRightRadius: 25,
+    borderBottomRightRadius: 25,
+    borderBottomLeftRadius: 25,
     position: 'relative',
     marginBottom: 15,
   },
@@ -54,7 +58,10 @@ export const styles = StyleSheet.create({
   viewMoreButton: {
     marginTop: 8,
     paddingTop: 5,
-    borderRadius: 5,
+    borderTopLeftRadius: 5,
+    borderTopRightRadius: 5,
+    borderBottomRightRadius: 5,
+    borderBottomLeftRadius: 5,
   },
   viewMoreButtonText: {
     color: '#B6488D',

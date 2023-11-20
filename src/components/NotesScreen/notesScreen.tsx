@@ -50,7 +50,10 @@ const NotesScreen = observer(() => {
 
                   width: 'auto',
                   paddingTop: 20,
-                  borderRadius: 50,
+                  borderTopLeftRadius: 50,
+                  borderTopRightRadius: 50,
+                  borderBottomRightRadius: 50,
+                  borderBottomLeftRadius: 50,
                   height: 60,
                   position: 'relative',
                 },
@@ -78,7 +81,10 @@ const NotesScreen = observer(() => {
                     activeComponent === 'ViewNotes' ? '#2196F3' : '#70B8FB',
                   width: 'auto',
                   paddingTop: 20,
-                  borderRadius: 50,
+                  borderTopLeftRadius: 50,
+                  borderTopRightRadius: 50,
+                  borderBottomRightRadius: 50,
+                  borderBottomLeftRadius: 50,
                   height: 60,
                 },
               ]}>

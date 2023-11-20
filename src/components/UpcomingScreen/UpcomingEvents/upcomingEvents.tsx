@@ -101,7 +101,13 @@ export const UpcomingEvents: React.FC<UpcomingEventProps> = observer(({id}) => {
                         </Text>
 
                         <View
-                          style={{backgroundColor: '#fff', borderRadius: 20}}>
+                          style={{
+                            backgroundColor: '#fff',
+                            borderTopLeftRadius: 20,
+                            borderTopRightRadius: 20,
+                            borderBottomRightRadius: 20,
+                            borderBottomLeftRadius: 20,
+                          }}>
                           <UpdateUpcomingAttendance
                             id={id}
                             eventId={item.event_id}

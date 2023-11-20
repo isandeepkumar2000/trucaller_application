@@ -7,7 +7,10 @@ export const styles = StyleSheet.create({
     borderBottomColor: 'black',
     borderBottomWidth: 0,
     paddingBottom: 10,
-    borderRadius: 50,
+    borderTopLeftRadius: 50,
+    borderTopRightRadius: 50,
+    borderBottomRightRadius: 50,
+    borderBottomLeftRadius: 50,
     paddingLeft: 10,
     paddingRight: 3,
     marginTop: 12,
@@ -29,7 +32,10 @@ export const styles = StyleSheet.create({
   inputSearchStyle: {
     // shadowColor: '#52006A',
     // elevation: 20,
-    borderRadius: 40,
+    borderTopLeftRadius: 40,
+    borderTopRightRadius: 40,
+    borderBottomRightRadius: 40,
+    borderBottomLeftRadius: 40,
     borderWidth: 0,
   },
 });

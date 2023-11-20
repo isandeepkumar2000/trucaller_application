@@ -173,7 +173,9 @@ const App = observer(() => {
                 await AsyncStorage.removeItem('token');
                 await AsyncStorage.removeItem('isUserLoggedIn');
                 runInAction(() => {
+                  homePageStore.setSearchQuery('');
                   authStore.isLoggedIn = false;
+                  homePageStore.setStudentData([]);
                 });
               } catch (error) {
                 console.error(error);
@@ -235,7 +237,10 @@ const App = observer(() => {
           <View
             style={{
               backgroundColor: 'white',
-              borderRadius: 8,
+              borderTopLeftRadius: 8,
+              borderTopRightRadius: 8,
+              borderBottomRightRadius: 8,
+              borderBottomLeftRadius: 8,
               display: 'flex',
               padding: 0,
               width: '90%',
@@ -264,6 +269,7 @@ const App = observer(() => {
                 style={{
                   display: 'flex',
                   flexDirection: 'row',
+                  flexWrap: 'wrap',
                 }}>
                 <Text
                   style={{fontWeight: 'bold', fontSize: 16, marginBottom: 10}}>
@@ -275,6 +281,7 @@ const App = observer(() => {
                     fontSize: 16,
                     fontWeight: 'bold',
                     color: '#b6488d',
+                    width: '60%',
                   }}>
                   {callStore.studentDetails.studentName}
                 </Text>
@@ -294,6 +301,7 @@ const App = observer(() => {
                     fontSize: 16,
                     fontWeight: 'bold',
                     color: '#b6488d',
+                    width: '60%',
                   }}>
                   {callStore.studentDetails.parentName}
                 </Text>
@@ -379,7 +387,10 @@ const styles = StyleSheet.create({
     shadowColor: 'black',
     shadowOpacity: 0.8,
     shadowRadius: 2,
-    borderRadius: 10,
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
+    borderBottomRightRadius: 10,
+    borderBottomLeftRadius: 10,
     elevation: 5,
     shadowOffset: {
       height: 1,
@@ -392,12 +403,19 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     padding: 10,
     backgroundColor: '#2196F3',
-    borderRadius: 5,
+    borderTopLeftRadius: 5,
+    borderTopRightRadius: 5,
+    borderBottomRightRadius: 5,
+    borderBottomLeftRadius: 5,
   },
   closeButton: {
     padding: 10,
     backgroundColor: 'gray',
-    borderRadius: 5,
+
+    borderTopLeftRadius: 5,
+    borderTopRightRadius: 5,
+    borderBottomRightRadius: 5,
+    borderBottomLeftRadius: 5,
     fontSize: 16,
     fontWeight: 'bold',
   },

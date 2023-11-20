@@ -1,12 +1,11 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {observer} from 'mobx-react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import debounce from 'lodash.debounce';
-import NoDataFound from '../../Images/no_data_found.png';
+import NoDataFound from '../../Images/No.png';
 import {styles} from './homeScreenStyle';
-
 import {homePageStore} from '../../Store/HomePageStore/storeHomePage';
+import {StudentListComponent} from './StudentList/studentList';
 
 import {
   View,
@@ -17,10 +16,11 @@ import {
   ActivityIndicator,
   ToastAndroid,
   Image,
+  Text,
 } from 'react-native';
-import {StudentListComponent} from './StudentList/studentList';
 
 export const StudentList = observer(() => {
+  const [searchInitiated, setSearchInitiated] = useState(false);
   const fetchHomePageData = async () => {
     homePageStore.setIsLoading(true);
     try {
@@ -48,6 +48,7 @@ export const StudentList = observer(() => {
             students.length > 0 ? students[0].profile_pic : null;
           homePageStore.setProfilePic(profilePic);
           homePageStore.setStudentData(students);
+          setSearchInitiated(true);
         } else {
           console.error(`Error: ${response.status} - ${response.statusText}`);
           const errorMessage = `Error: ${response.status} - ${response.statusText}`;
@@ -63,25 +64,23 @@ export const StudentList = observer(() => {
       homePageStore.setIsLoading(false);
     }
   };
-  const debouncedFetchHomePageData = debounce(fetchHomePageData, 100);
 
   const handleSearch = () => {
-    fetchHomePageData();
     if (homePageStore.searchQuery === '') {
-      ToastAndroid.showWithGravity(
-        'Please type at least 3 letters of your name',
+      ToastAndroid.show(
+        ' Enter student name and press search iconborderRadius',
         ToastAndroid.LONG,
-        ToastAndroid.BOTTOM,
       );
     } else {
-      debouncedFetchHomePageData();
+      fetchHomePageData();
     }
   };
-  useEffect(() => {
-    if (homePageStore.searchQuery.trim().length >= 3) {
-      debouncedFetchHomePageData();
-    }
-  }, [homePageStore.searchQuery]);
+
+  const handleInputChange = (text: string) => {
+    homePageStore.setSearchQuery(text);
+    homePageStore.setStudentData([]);
+    setSearchInitiated(false);
+  };
 
   return (
     <SafeAreaView style={[styles.saferView]}>
@@ -98,29 +97,42 @@ export const StudentList = observer(() => {
               width: '100%',
               backgroundColor: '#fff',
               display: 'flex',
-              paddingRight: 25,
-              paddingLeft: 25,
+              paddingRight: 15,
+              paddingLeft: 15,
               alignItems: 'center',
               flexDirection: 'row',
               justifyContent: 'space-between',
-              borderRadius: 10,
+              borderTopLeftRadius: 0,
+              borderTopRightRadius: 0,
+              borderBottomRightRadius: 0,
+              borderBottomLeftRadius: 0,
+              position: 'relative',
             }}>
             <TextInput
-              placeholder="Please type your Name"
+              placeholder="Enter student name"
               style={styles.inputStyles}
-              onChangeText={text => homePageStore.setSearchQuery(text)}
+              onChangeText={handleInputChange}
               value={homePageStore.searchQuery}
             />
             <Pressable
               onPress={handleSearch}
-              style={({pressed}) => [
-                {
-                  backgroundColor: pressed ? '#B6488D' : 'white',
-                  borderRadius: 50,
-                  padding: 10,
-                },
-              ]}>
-              <Icon name="search" size={22} style={{color: '#B6488D'}} />
+              style={{
+                position: 'absolute',
+                top: 0,
+                right: 0,
+                bottom: 0,
+                height: 55,
+                width: 55,
+                backgroundColor: '#0a9856',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                borderTopLeftRadius: 0,
+                borderTopRightRadius: 0,
+                borderBottomRightRadius: 0,
+                borderBottomLeftRadius: 0,
+              }}>
+              <Icon name="search" size={25} style={{color: '#fff'}} />
             </Pressable>
           </View>
         </View>
@@ -132,10 +144,27 @@ export const StudentList = observer(() => {
           />
         ) : (
           <View style={styles.container}>
-            {homePageStore.studentData.length === 0 ? (
+            {homePageStore.searchQuery.trim() === '' ? (
+              <Text
+                style={{
+                  textAlign: 'center',
+                  fontSize: 28,
+                  paddingHorizontal: 50,
+                  paddingVertical: 260,
+                  color: '#B6488D',
+                  fontWeight: '500',
+                }}>
+                Enter student name to search
+              </Text>
+            ) : searchInitiated && homePageStore.studentData.length == 0 ? (
               <Image
                 source={NoDataFound}
-                style={{width: 200, height: 200, alignSelf: 'center'}}
+                style={{
+                  width: '100%',
+                  height: 305,
+                  alignSelf: 'center',
+                  marginTop: 80,
+                }}
               />
             ) : (
               <StudentListComponent fetchedDataa={homePageStore.studentData} />

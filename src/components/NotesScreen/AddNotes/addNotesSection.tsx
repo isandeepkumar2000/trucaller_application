@@ -340,7 +340,10 @@ export const AddNotesSection: React.FC<AddNotesProps> = observer(({id}) => {
             {
               backgroundColor: '#0073DA',
               height: 58,
-              borderRadius: 40,
+              borderTopLeftRadius: 40,
+              borderTopRightRadius: 40,
+              borderBottomRightRadius: 40,
+              borderBottomLeftRadius: 40,
             },
           ]}>
           <Text style={styles.buttonText}>Cancel</Text>
@@ -353,7 +356,10 @@ export const AddNotesSection: React.FC<AddNotesProps> = observer(({id}) => {
               backgroundColor: pressed ? 'pink' : '#B6488D',
               marginLeft: 20,
               height: 58,
-              borderRadius: 40,
+              borderTopLeftRadius: 40,
+              borderTopRightRadius: 40,
+              borderBottomRightRadius: 40,
+              borderBottomLeftRadius: 40,
             },
           ]}>
           <Text style={styles.buttonText}>Submit</Text>

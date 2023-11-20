@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, Linking} from 'react-native';
+import {View, Text, Linking, Image} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {StudentFlagsData} from '../../../utils/Color_Folder/students_Flag';
 import {Student} from '../../../utils/DataType/students_Data_Type';
@@ -126,7 +126,13 @@ export const StudentListComponent: React.FC<StudentListComponentProps> =
                   <Text
                     style={[
                       styles.buttonText,
-                      {borderRadius: 5, backgroundColor: '#8BC34A'},
+                      {
+                        borderTopLeftRadius: 5,
+                        borderTopRightRadius: 5,
+                        borderBottomRightRadius: 5,
+                        borderBottomLeftRadius: 5,
+                        backgroundColor: '#8BC34A',
+                      },
                     ]}>
                     Feedback Pending
                   </Text>
@@ -138,7 +144,13 @@ export const StudentListComponent: React.FC<StudentListComponentProps> =
                   <Text
                     style={[
                       styles.buttonText,
-                      {borderRadius: 5, backgroundColor: '#2196F3'},
+                      {
+                        borderTopLeftRadius: 5,
+                        borderTopRightRadius: 5,
+                        borderBottomRightRadius: 5,
+                        borderBottomLeftRadius: 5,
+                        backgroundColor: '#2196F3',
+                      },
                     ]}>
                     Courier Pending
                   </Text>
@@ -150,7 +162,13 @@ export const StudentListComponent: React.FC<StudentListComponentProps> =
                   <Text
                     style={[
                       styles.buttonText,
-                      {borderRadius: 5, backgroundColor: '#795548'},
+                      {
+                        borderTopLeftRadius: 5,
+                        borderTopRightRadius: 5,
+                        borderBottomRightRadius: 5,
+                        borderBottomLeftRadius: 5,
+                        backgroundColor: '#795548',
+                      },
                     ]}>
                     Improvement Session Flag
                   </Text>
@@ -162,7 +180,13 @@ export const StudentListComponent: React.FC<StudentListComponentProps> =
                   <Text
                     style={[
                       styles.buttonText,
-                      {borderRadius: 5, backgroundColor: '#9C27B0'},
+                      {
+                        borderTopLeftRadius: 5,
+                        borderTopRightRadius: 5,
+                        borderBottomRightRadius: 5,
+                        borderBottomLeftRadius: 5,
+                        backgroundColor: '#9C27B0',
+                      },
                     ]}>
                     Meeting Flag
                   </Text>
@@ -174,7 +198,13 @@ export const StudentListComponent: React.FC<StudentListComponentProps> =
                   <Text
                     style={[
                       styles.buttonText,
-                      {borderRadius: 5, backgroundColor: '#F44336'},
+                      {
+                        borderTopLeftRadius: 5,
+                        borderTopRightRadius: 5,
+                        borderBottomRightRadius: 5,
+                        borderBottomLeftRadius: 5,
+                        backgroundColor: '#F44336',
+                      },
                     ]}>
                     Payment Pending
                   </Text>
@@ -186,7 +216,13 @@ export const StudentListComponent: React.FC<StudentListComponentProps> =
                   <Text
                     style={[
                       styles.buttonText,
-                      {borderRadius: 5, backgroundColor: '#F3CF51'},
+                      {
+                        borderTopLeftRadius: 5,
+                        borderTopRightRadius: 5,
+                        borderBottomRightRadius: 5,
+                        borderBottomLeftRadius: 5,
+                        backgroundColor: '#F3CF51',
+                      },
                     ]}>
                     Makeup Session Needed
                   </Text>
@@ -198,7 +234,13 @@ export const StudentListComponent: React.FC<StudentListComponentProps> =
                   <Text
                     style={[
                       styles.buttonText,
-                      {borderRadius: 5, backgroundColor: '#607D8B'},
+                      {
+                        borderTopLeftRadius: 5,
+                        borderTopRightRadius: 5,
+                        borderBottomRightRadius: 5,
+                        borderBottomLeftRadius: 5,
+                        backgroundColor: '#607D8B',
+                      },
                     ]}>
                     Absent without Notice
                   </Text>

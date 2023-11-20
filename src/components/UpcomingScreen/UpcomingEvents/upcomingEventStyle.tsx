@@ -28,9 +28,12 @@ export const styles = StyleSheet.create({
   },
   eventRow: {
     padding: 25,
-    borderRadius: 20,
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    borderBottomRightRadius: 20,
+    borderBottomLeftRadius: 20,
     marginBottom: 15,
-    borderRadius: 25,
+
     backgroundColor: '#D9EFFF',
   },
   eventLeft: {
@@ -49,7 +52,10 @@ export const styles = StyleSheet.create({
   },
   iconStyle: {
     backgroundColor: '#0073DA',
-    borderRadius: 50,
+    borderTopLeftRadius: 50,
+    borderTopRightRadius: 50,
+    borderBottomRightRadius: 50,
+    borderBottomLeftRadius: 50,
     height: 44,
     width: 44,
     display: 'flex',
@@ -62,7 +68,10 @@ export const styles = StyleSheet.create({
     color: 'white',
     fontSize: 16,
     padding: 10,
-    borderRadius: 5,
+    borderTopLeftRadius: 5,
+    borderTopRightRadius: 5,
+    borderBottomRightRadius: 5,
+    borderBottomLeftRadius: 5,
   },
   buttonContainer: {
     flexDirection: 'row',
@@ -87,7 +96,10 @@ export const styles = StyleSheet.create({
   },
   attendenceButtonContent: {
     backgroundColor: '#B6488D',
-    borderRadius: 5,
+    borderTopLeftRadius: 5,
+    borderTopRightRadius: 5,
+    borderBottomRightRadius: 5,
+    borderBottomLeftRadius: 5,
     width: 'auto',
     color: '#fff',
     paddingTop: 5,

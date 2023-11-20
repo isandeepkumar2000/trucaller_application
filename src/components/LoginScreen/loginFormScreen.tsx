@@ -140,7 +140,10 @@ export const LoginScreen = observer(({navigation}: LoginScreenProps) => {
                   alignItems: 'center',
                   justifyContent: 'center',
                   padding: 16,
-                  borderRadius: 50,
+                  borderTopLeftRadius: 50,
+                  borderTopRightRadius: 50,
+                  borderBottomRightRadius: 50,
+                  borderBottomLeftRadius: 50,
                 },
                 styles.loginButton,
               ]}>

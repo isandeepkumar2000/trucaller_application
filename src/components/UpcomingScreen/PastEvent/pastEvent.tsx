@@ -93,7 +93,11 @@ export const PastEvent: React.FC<PastEventProps> = observer(({id}) => {
                     marginBottom: 15,
                     padding: 0,
                     paddingBottom: 25,
-                    borderRadius: 25,
+
+                    borderTopLeftRadius: 25,
+                    borderTopRightRadius: 25,
+                    borderBottomRightRadius: 25,
+                    borderBottomLeftRadius: 25,
                     backgroundColor: '#D9EFFF',
                   },
                 ]}
@@ -124,7 +128,13 @@ export const PastEvent: React.FC<PastEventProps> = observer(({id}) => {
                   </View>
                 </View>
                 {upcomingEventStore.expandedIndex === index && (
-                  <View style={{borderRadius: 0}}>
+                  <View
+                    style={{
+                      borderTopLeftRadius: 0,
+                      borderTopRightRadius: 0,
+                      borderBottomRightRadius: 0,
+                      borderBottomLeftRadius: 0,
+                    }}>
                     <View style={[styles.attendenceButton]}>
                       <Text style={[styles.attendenceButtonContent]}>
                         {item.attendance_status}
@@ -181,7 +191,12 @@ export const PastEvent: React.FC<PastEventProps> = observer(({id}) => {
                                 style={[
                                   styles.attendenceButtonContent,
                                   styles.buttonText,
-                                  {borderRadius: 5},
+                                  {
+                                    borderTopLeftRadius: 5,
+                                    borderTopRightRadius: 5,
+                                    borderBottomRightRadius: 5,
+                                    borderBottomLeftRadius: 5,
+                                  },
                                 ]}>
                                 {item.attendance_book}{' '}
                                 {item.attendance_book_page_no}{' '}
@@ -207,7 +222,10 @@ export const PastEvent: React.FC<PastEventProps> = observer(({id}) => {
                                   styles.attendenceButtonContent,
                                   styles.buttonText,
                                   {
-                                    borderRadius: 5,
+                                    borderTopLeftRadius: 5,
+                                    borderTopRightRadius: 5,
+                                    borderBottomRightRadius: 5,
+                                    borderBottomLeftRadius: 5,
                                     marginBottom: 0,
                                     backgroundColor: '#0A9856',
                                   },
@@ -274,7 +292,13 @@ export const PastEvent: React.FC<PastEventProps> = observer(({id}) => {
                                 style={[
                                   styles.attendenceButtonContent,
                                   styles.buttonText,
-                                  {borderRadius: 5, backgroundColor: 'orange'},
+                                  {
+                                    borderTopLeftRadius: 5,
+                                    borderTopRightRadius: 5,
+                                    borderBottomRightRadius: 5,
+                                    borderBottomLeftRadius: 5,
+                                    backgroundColor: 'orange',
+                                  },
                                 ]}>
                                 {item.group_level_name}{' '}
                               </Text>

@@ -17,13 +17,20 @@ export const styles = StyleSheet.create({
   },
   parentRow: {
     padding: 20,
-    borderRadius: 10,
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
+    borderBottomRightRadius: 10,
+    borderBottomLeftRadius: 10,
     marginBottom: 20,
   },
   userImage: {
     width: 86,
     height: 86,
-    borderRadius: 60,
+
+    borderTopLeftRadius: 60,
+    borderTopRightRadius: 60,
+    borderBottomRightRadius: 60,
+    borderBottomLeftRadius: 60,
     justifyContent: 'center',
     alignItems: 'center',
     borderColor: '#fff',
@@ -37,7 +44,10 @@ export const styles = StyleSheet.create({
   button: {
     flex: 1,
     padding: 8,
-    borderRadius: 5,
+    borderTopLeftRadius: 5,
+    borderTopRightRadius: 5,
+    borderBottomRightRadius: 5,
+    borderBottomLeftRadius: 5,
     margin: 5,
   },
   buttonText: {
