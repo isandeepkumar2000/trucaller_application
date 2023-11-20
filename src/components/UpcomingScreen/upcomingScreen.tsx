@@ -1,7 +1,10 @@
 import React, {useState} from 'react';
 import {useRoute} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-
+import {styles} from './upcomingScreenStyle';
+import {homePageStore} from '../../Store/HomePageStore/storeHomePage';
+import {UpcomingEvents} from './UpcomingEvents/upcomingEvents';
+import {PastEvent} from './PastEvent/pastEvent';
 import {observer} from 'mobx-react';
 import {
   Image,
@@ -11,14 +14,9 @@ import {
   TouchableHighlight,
   View,
 } from 'react-native';
-import {styles} from './upcomingScreenStyle';
-import {homePageStore} from '../../Store/HomePageStore/storeHomePage';
-import {UpcomingEvents} from './UpcomingEvents/upcomingEvents';
-import {PastEvent} from './PastEvent/pastEvent';
 
 const UpcomingScreen = observer(() => {
   const imageUrl = homePageStore.profilePic;
-
   const route = useRoute();
   const {firstname, lastname, id, joining_date} = route.params;
   const [activeComponent, setActiveComponent] = useState('UpcomingEvents');

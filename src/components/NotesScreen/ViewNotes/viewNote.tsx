@@ -4,6 +4,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import {observer} from 'mobx-react';
 import {styles} from './viewNotesStyle';
 import {addNotesStore} from '../../../Store/AddNotesStore/addNotesStore';
+import {ViewNotesProps} from '../../../utils/DataTypeInterface/students_Data_Type';
 
 import {
   View,
@@ -15,10 +16,6 @@ import {
   ToastAndroid,
   Alert,
 } from 'react-native';
-
-interface ViewNotesProps {
-  id: number;
-}
 
 export const ViewNotes: React.FC<ViewNotesProps> = observer(({id}) => {
   const [isDeleting, setIsDeleting] = useState(false);
@@ -51,7 +48,7 @@ export const ViewNotes: React.FC<ViewNotesProps> = observer(({id}) => {
     }
   };
 
-  const fetchStudentData = async () => {
+  const fetchViewNotesData = async () => {
     addNotesStore.setIsLoading(true);
     try {
       const apiUrlFromStorage = await AsyncStorage.getItem('selectedItemInfo');
@@ -90,7 +87,7 @@ export const ViewNotes: React.FC<ViewNotesProps> = observer(({id}) => {
   };
 
   useEffect(() => {
-    fetchStudentData();
+    fetchViewNotesData();
   }, [id]);
 
   const toggleAccordion = (index: number) => {

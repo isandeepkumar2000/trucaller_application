@@ -64,7 +64,6 @@ export const fetchingPastEventsData = async (number: string, event: string) => {
 
       if (response.ok) {
         const responseData = await response.json();
-        // console.log(responseData, 'call log response data');
         const studentName = responseData.student_names;
         const parentName = responseData.parent_name;
 

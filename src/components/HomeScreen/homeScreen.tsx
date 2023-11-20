@@ -76,6 +76,10 @@ export const StudentList = observer(() => {
     }
   };
 
+  const handleInputSubmit = () => {
+    handleSearch();
+  };
+
   const handleInputChange = (text: string) => {
     homePageStore.setSearchQuery(text);
     homePageStore.setStudentData([]);
@@ -109,10 +113,11 @@ export const StudentList = observer(() => {
               position: 'relative',
             }}>
             <TextInput
-              placeholder="Enter student name"
+              placeholder="Enter student name to search"
               style={styles.inputStyles}
               onChangeText={handleInputChange}
               value={homePageStore.searchQuery}
+              onSubmitEditing={handleInputSubmit}
             />
             <Pressable
               onPress={handleSearch}
@@ -167,7 +172,9 @@ export const StudentList = observer(() => {
                 }}
               />
             ) : (
-              <StudentListComponent fetchedDataa={homePageStore.studentData} />
+              <StudentListComponent
+                studentdataList={homePageStore.studentData}
+              />
             )}
           </View>
         )}

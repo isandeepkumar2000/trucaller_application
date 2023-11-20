@@ -1,6 +1,10 @@
 import React, {useEffect} from 'react';
 import {observer} from 'mobx-react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {upcomingEventStore} from '../../../Store/UpcomingEventStore/upComingEventStore';
+import {styles} from './upcomingEventStyle';
+import {UpdateUpcomingAttendance} from '../../UpdateAttendanceScreen/updateUpcomingAttendance';
+import {UpcomingEventProps} from '../../../utils/DataTypeInterface/students_Data_Type';
 
 import {
   View,
@@ -10,15 +14,9 @@ import {
   ActivityIndicator,
   ToastAndroid,
 } from 'react-native';
-import {upcomingEventStore} from '../../../Store/UpcomingEventStore/upComingEventStore';
-import {styles} from './upcomingEventStyle';
-import {UpdateUpcomingAttendance} from '../../UpdateAttendanceScreen/updateUpcomingAttendance';
-interface UpcomingEventProps {
-  id: number;
-}
 
 export const UpcomingEvents: React.FC<UpcomingEventProps> = observer(({id}) => {
-  const fetchingPastEventsData = async () => {
+  const fetchingUpcomingEventsData = async () => {
     upcomingEventStore.setIsLoading(true);
     try {
       const apiUrlFromStorage = await AsyncStorage.getItem('selectedItemInfo');
@@ -59,7 +57,7 @@ export const UpcomingEvents: React.FC<UpcomingEventProps> = observer(({id}) => {
   };
 
   useEffect(() => {
-    fetchingPastEventsData();
+    fetchingUpcomingEventsData();
   }, []);
 
   const arrayLength = upcomingEventStore.upcomingEventDetails.length;

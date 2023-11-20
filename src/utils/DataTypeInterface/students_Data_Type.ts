@@ -25,3 +25,34 @@ export interface Student {
   notes_flags: string[];
   joining_date: string;
 }
+
+
+export interface StudentListComponentProps {
+  studentdataList: Student[];
+}
+
+export type LoginScreenProps = {
+  navigation: any;
+};
+
+export interface AddNotesProps {
+  id: number;
+}
+
+export interface PastEventProps {
+  id: number;
+}
+
+export interface UpcomingEventProps {
+  id: number;
+}
+
+export interface UpdateUpcomingAttendanceProps {
+  eventId: number;
+  id: number;
+  attendanceApiStatus: string;
+}
+
+export interface ViewNotesProps {
+  id: number;
+}

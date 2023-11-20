@@ -5,7 +5,10 @@ import RadioGroup from 'react-native-radio-buttons-group';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useNavigation} from '@react-navigation/native';
-import {ActivityIndicator, Alert, Button} from 'react-native';
+import {ActivityIndicator, Alert} from 'react-native';
+import {addNotesStore} from '../../../Store/AddNotesStore/addNotesStore';
+import {AddNotesProps} from '../../../utils/DataTypeInterface/students_Data_Type';
+
 import {
   View,
   Text,
@@ -19,11 +22,6 @@ import {
   FlagSetType,
   FlagUnSetType,
 } from '../../../utils/FlagRadioButton/flagRadioButton';
-import {addNotesStore} from '../../../Store/AddNotesStore/addNotesStore';
-
-interface AddNotesProps {
-  id: number;
-}
 
 export const AddNotesSection: React.FC<AddNotesProps> = observer(({id}) => {
   const [minUnsetDate, setMinUnsetDate] = useState<Date>(new Date());

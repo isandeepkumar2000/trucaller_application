@@ -1,3 +1,11 @@
+import React, {useEffect} from 'react';
+import {observer} from 'mobx-react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import {styles} from './pastEventStyle';
+import {upcomingEventStore} from '../../../Store/UpcomingEventStore/upComingEventStore';
+import {PastEventProps} from '../../../utils/DataTypeInterface/students_Data_Type';
+
 import {
   View,
   Text,
@@ -8,16 +16,6 @@ import {
   ToastAndroid,
   Pressable,
 } from 'react-native';
-import React, {useEffect} from 'react';
-import {observer} from 'mobx-react';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import Icon from 'react-native-vector-icons/FontAwesome';
-import {styles} from './pastEventStyle';
-import {upcomingEventStore} from '../../../Store/UpcomingEventStore/upComingEventStore';
-
-interface PastEventProps {
-  id: number;
-}
 
 export const PastEvent: React.FC<PastEventProps> = observer(({id}) => {
   const toggleAccordion = (index: any) => {

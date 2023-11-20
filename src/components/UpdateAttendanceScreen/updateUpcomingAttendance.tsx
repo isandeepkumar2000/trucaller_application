@@ -4,15 +4,9 @@ import {Dropdown} from 'react-native-element-dropdown';
 import {observer} from 'mobx-react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {AttendanceStatusCode} from '../../utils/AttendanceStatusCode/attendanceStatusCode';
-
 import {styles} from './updateAttendanceScreenStyle';
 import {upcomingEventStore} from '../../Store/UpcomingEventStore/upComingEventStore';
-
-interface UpdateUpcomingAttendanceProps {
-  eventId: number;
-  id: number;
-  attendanceApiStatus: string;
-}
+import {UpdateUpcomingAttendanceProps} from '../../utils/DataTypeInterface/students_Data_Type';
 
 export const UpdateUpcomingAttendance: React.FC<UpdateUpcomingAttendanceProps> =
   observer(({eventId, attendanceApiStatus, id}) => {

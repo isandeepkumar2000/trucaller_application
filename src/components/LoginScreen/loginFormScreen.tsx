@@ -4,8 +4,11 @@ import Icon from 'react-native-vector-icons/Feather';
 import TopBG from '../../Images/TopBg.png';
 import {Dropdown} from 'react-native-element-dropdown';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {data} from '../../utils/Api_Drop_Down_Menu/api_Url_Drop_Down_Menu';
+import {data} from '../../utils/APIsMenu/ApidropDown';
 import {styles} from './loginformStyle';
+import {authStore} from '../../Store/LogicAuthStore/authStore';
+import {LoginScreenProps} from '../../utils/DataTypeInterface/students_Data_Type';
+
 import {
   Text,
   TextInput,
@@ -17,11 +20,6 @@ import {
   ActivityIndicator,
   ToastAndroid,
 } from 'react-native';
-import {authStore} from '../../Store/LogicAuthStore/authStore';
-
-type LoginScreenProps = {
-  navigation: any;
-};
 
 export const LoginScreen = observer(({navigation}: LoginScreenProps) => {
   const handleLogin = async () => {

@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {useRoute} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-
+import {AddNotesSection} from './AddNotes/addNotesSection';
 import {styles} from './notesScreenStyle';
 import {observer} from 'mobx-react';
 import {ViewNotes} from './ViewNotes/viewNote';
@@ -12,7 +12,6 @@ import {
   SafeAreaView,
   ScrollView,
 } from 'react-native';
-import {AddNotesSection} from './AddNotes/addNotesSection';
 
 const NotesScreen = observer(() => {
   const route = useRoute();

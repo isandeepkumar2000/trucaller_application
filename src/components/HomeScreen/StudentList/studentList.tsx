@@ -1,20 +1,16 @@
 import React from 'react';
 import {View, Text, Linking, Image} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import {StudentFlagsData} from '../../../utils/Color_Folder/students_Flag';
-import {Student} from '../../../utils/DataType/students_Data_Type';
+import {StudentFlagsData} from '../../../utils/StudentFlagsColor/students_Flag';
+import {StudentListComponentProps} from '../../../utils/DataTypeInterface/students_Data_Type';
 import {observer} from 'mobx-react';
 import {useNavigation} from '@react-navigation/native';
 import {statusLabels} from '../../../utils/statusLabel/statusLabel';
 import {Pressable} from 'react-native';
 import {styles} from './studentListStyle';
 
-interface StudentListComponentProps {
-  fetchedDataa: Student[];
-}
-
 export const StudentListComponent: React.FC<StudentListComponentProps> =
-  observer(({fetchedDataa}) => {
+  observer(({studentdataList}) => {
     const navigation = useNavigation();
 
     const handleAddNotes = (
@@ -47,7 +43,7 @@ export const StudentListComponent: React.FC<StudentListComponentProps> =
 
     return (
       <>
-        {fetchedDataa.map((item: any) => (
+        {studentdataList.map((item: any) => (
           <View key={item.id} style={styles.parentRow}>
             <View
               style={{
