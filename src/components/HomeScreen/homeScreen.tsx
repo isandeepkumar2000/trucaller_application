@@ -67,10 +67,7 @@ export const StudentList = observer(() => {
 
   const handleSearch = () => {
     if (homePageStore.searchQuery === '') {
-      ToastAndroid.show(
-        ' Enter student name and press search iconborderRadius',
-        ToastAndroid.LONG,
-      );
+      ToastAndroid.show('Enter student name to search', ToastAndroid.LONG);
     } else {
       fetchHomePageData();
     }

@@ -61,6 +61,7 @@ export const fetchingPastEventsData = async (number: string, event: string) => {
           body: JSON.stringify(requestBody),
         },
       );
+      console.log(response, 'Api Response Call');
 
       if (response.ok) {
         const responseData = await response.json();

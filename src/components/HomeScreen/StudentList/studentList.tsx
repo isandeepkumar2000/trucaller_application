@@ -100,7 +100,77 @@ export const StudentListComponent: React.FC<StudentListComponentProps> =
                     }}
                     disabled={false}
                     style={[styles.button, {marginBottom: 10, marginRight: 8}]}>
-                    <Icon name="phone" size={18} style={styles.phoneIcon} />
+                    <Icon
+                      name="phone"
+                      size={18}
+                      style={[
+                        styles.phoneIcon,
+                        {
+                          marginBottom: 10,
+                          marginRight: 8,
+                          backgroundColor: '#0A9856',
+                        },
+                      ]}
+                    />
+                  </Pressable>
+                  <Pressable
+                    onPress={() => {
+                      const phoneNumber = subItem.phone;
+                      if (phoneNumber) {
+                        Linking.openURL(`https://wa.me/${phoneNumber}`)
+                          .then(() => {})
+                          .catch(error => {
+                            console.error('Failed to open WhatsApp: ', error);
+                          });
+                      } else {
+                        console.warn('Phone number is not available');
+                      }
+                    }}
+                    disabled={false}
+                    style={[styles.button, {marginBottom: 10, marginRight: 8}]}>
+                    <Icon
+                      name="whatsapp"
+                      size={18}
+                      style={[
+                        styles.whatsappIcon,
+                        {
+                          marginBottom: 10,
+                          marginRight: 8,
+                          backgroundColor: '#48FA14',
+                        },
+                      ]}
+                    />
+                  </Pressable>
+                  <Pressable
+                    onPress={() => {
+                      const phoneNumber = subItem.phone;
+                      if (phoneNumber) {
+                        Linking.openURL(`sms:${phoneNumber}`)
+                          .then(() => {})
+                          .catch(error => {
+                            console.error(
+                              'Failed to open messaging app: ',
+                              error,
+                            );
+                          });
+                      } else {
+                        console.warn('Phone number is not available');
+                      }
+                    }}
+                    disabled={false}
+                    style={[styles.button, {marginBottom: 10, marginRight: 8}]}>
+                    <Icon
+                      name="envelope-o"
+                      size={18}
+                      style={[
+                        styles.messageIcon,
+                        {
+                          marginBottom: 10,
+                          marginRight: 0,
+                          backgroundColor: '#F7AA25',
+                        },
+                      ]}
+                    />
                   </Pressable>
                 </View>
               ))}

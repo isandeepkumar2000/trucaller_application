@@ -51,7 +51,7 @@ export const NotificationListener = async () => {
   messaging().onMessage(
     async (remoteMessage: FirebaseMessagingTypes.RemoteMessage) => {
       console.log('received in foreground remoteMessage', remoteMessage);
-      displayNotification(remoteMessage);
+      DisplayNotification(remoteMessage);
     },
   );
 
@@ -67,18 +67,17 @@ export const NotificationListener = async () => {
     });
 };
 
-export const displayNotification = async (
-  notification: FirebaseMessagingTypes.RemoteMessage,
-) => {
+export const DisplayNotification = async (RemoteMessage: any) => {
   const channelId = await notifee.createChannel({
     id: 'default',
     name: 'Default Channel',
     importance: AndroidImportance.HIGH,
+    badge: false,
   });
 
   await notifee.displayNotification({
-    title: notification.notification?.title ?? 'Default Title',
-    body: notification.notification?.body ?? 'Default Body',
+    title: RemoteMessage.data.title,
+    body: RemoteMessage.data.body,
     android: {
       channelId,
       color: AndroidColor.RED,

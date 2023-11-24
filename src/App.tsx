@@ -15,26 +15,22 @@ import {LoginScreen} from './components/LoginScreen/loginFormScreen';
 import {StudentList} from './components/HomeScreen/homeScreen';
 import {styles} from './AppStyle';
 import {authStore} from './Store/LogicAuthStore/authStore';
-import CallDetectorManager from 'react-native-call-detection';
+
 import {
   NotificationListener,
   requestUserPermission,
 } from './utils/NotificationServiceFunction/notificationService';
-import {
-  callStore,
-  fetchingPastEventsData,
-} from './Store/CallLogsStore/callLogsStore';
+import {callStore} from './Store/CallLogsStore/callLogsStore';
 
 import {
   ActivityIndicator,
   View,
   Alert,
-  PermissionsAndroid,
   Text,
   Modal,
   ToastAndroid,
-  Platform,
 } from 'react-native';
+import {requestPermissions} from './utils/AndroidUserPermissionRequest/userPermissionAccess';
 
 const MainStack = createNativeStackNavigator();
 const AuthStack = createNativeStackNavigator();
@@ -98,63 +94,7 @@ const App = observer(() => {
   useEffect(() => {
     requestUserPermission();
     NotificationListener();
-  }, []);
-
-  useEffect(() => {
-    let callDetector: CallDetectorManager | null = null;
-
-    const handleCallEvent = (event: string, number: string | null) => {
-      if (event && number) {
-        console.log(`Event: ${event}, Number: ${number}`);
-        fetchingPastEventsData(number, event);
-      }
-    };
-
-    const requestPermissions = async () => {
-      try {
-        const rationale: PermissionsAndroid.Rationale = {
-          title: 'Phone State Permission',
-          message: 'This app needs access to your phone state and call logs',
-          buttonPositive: 'OK',
-        };
-
-        const permissionsToRequest = [
-          PermissionsAndroid.PERMISSIONS.READ_PHONE_STATE,
-          PermissionsAndroid.PERMISSIONS.READ_CALL_LOG,
-        ];
-
-        if (Platform.OS === 'android' && Platform.Version >= 33) {
-          permissionsToRequest.push(
-            PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS,
-          );
-        }
-        const grantedPermissions = await PermissionsAndroid.requestMultiple(
-          permissionsToRequest,
-        );
-
-        const allPermissionsGranted = Object.values(grantedPermissions).every(
-          permissionStatus =>
-            permissionStatus === PermissionsAndroid.RESULTS.GRANTED,
-        );
-
-        if (allPermissionsGranted) {
-          console.log('Permissions Accepted by User');
-          callDetector = new CallDetectorManager(handleCallEvent, true);
-        } else {
-          console.log('Some permissions were denied by user');
-        }
-      } catch (error) {
-        console.error('Error requesting permissions:', error);
-      }
-    };
-
     requestPermissions();
-
-    return () => {
-      if (callDetector) {
-        callDetector.dispose();
-      }
-    };
   }, []);
 
   const handleLogout = action(async () => {
