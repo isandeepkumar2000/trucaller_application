@@ -83,95 +83,120 @@ export const StudentListComponent: React.FC<StudentListComponentProps> =
 
             <View>
               {item.parent_details.map((subItem: any, subIndex: number) => (
-                <View key={subIndex} style={styles.parentDetails}>
-                  <Text style={styles.parentText}>
+                <View
+                  key={subIndex}
+                  style={[styles.parentDetails, {display: 'flex'}]}>
+                  <Text
+                    style={[styles.parentText, {width: '65%', paddingEnd: 10}]}>
                     {subItem.firstname} {subItem.lastname}
                   </Text>
-                  <Pressable
-                    onPress={() => {
-                      const phoneNumber = subItem.phone;
-                      const countryCode = subItem.phone_country;
-                      if (phoneNumber && countryCode) {
-                        const fullPhoneNumber = `${countryCode}${phoneNumber}`;
-                        Linking.openURL(`tel:${fullPhoneNumber}`)
-                          .then(() => {})
-                          .catch(error => {});
-                      }
-                    }}
-                    disabled={false}
-                    style={[styles.button, {marginBottom: 10, marginRight: 8}]}>
-                    <Icon
-                      name="phone"
-                      size={18}
+                  <Text>
+                    <Pressable
+                      onPress={() => {
+                        const phoneNumber = subItem.phone;
+                        const countryCode = subItem.phone_country;
+                        if (phoneNumber && countryCode) {
+                          const fullPhoneNumber = `${countryCode}${phoneNumber}`;
+                          Linking.openURL(`tel:${fullPhoneNumber}`)
+                            .then(() => {})
+                            .catch(error => {});
+                        }
+                      }}
+                      disabled={false}
                       style={[
-                        styles.phoneIcon,
-                        {
-                          marginBottom: 10,
-                          marginRight: 8,
-                          backgroundColor: '#0A9856',
-                        },
-                      ]}
-                    />
-                  </Pressable>
-                  <Pressable
-                    onPress={() => {
-                      const phoneNumber = subItem.phone;
-                      if (phoneNumber) {
-                        Linking.openURL(`https://wa.me/${phoneNumber}`)
-                          .then(() => {})
-                          .catch(error => {
-                            console.error('Failed to open WhatsApp: ', error);
-                          });
-                      } else {
-                        console.warn('Phone number is not available');
-                      }
-                    }}
-                    disabled={false}
-                    style={[styles.button, {marginBottom: 10, marginRight: 8}]}>
-                    <Icon
-                      name="whatsapp"
-                      size={18}
+                        styles.button,
+                        {marginBottom: 10, marginRight: 8},
+                      ]}>
+                      <Icon
+                        name="phone"
+                        size={18}
+                        style={[
+                          styles.phoneIcon,
+                          {
+                            marginBottom: 10,
+                            // marginRight: 8,
+                            backgroundColor: '#0A9856',
+                          },
+                        ]}
+                      />
+                    </Pressable>
+                    <Pressable
+                      onPress={() => {
+                        const phoneNumber = subItem.phone;
+                        const countryCode = subItem.phone_country;
+                        if (phoneNumber && countryCode) {
+                          const fullPhoneNumber = `${countryCode}${phoneNumber}`;
+                          if (fullPhoneNumber) {
+                            Linking.openURL(`https://wa.me/${fullPhoneNumber}`)
+                              .then(() => {})
+                              .catch(error => {
+                                console.error(
+                                  'Failed to open WhatsApp: ',
+                                  error,
+                                );
+                              });
+                          } else {
+                            console.warn('Phone number is not available');
+                          }
+                        }
+                      }}
+                      disabled={false}
                       style={[
-                        styles.whatsappIcon,
-                        {
-                          marginBottom: 10,
-                          marginRight: 8,
-                          backgroundColor: '#48FA14',
-                        },
-                      ]}
-                    />
-                  </Pressable>
-                  <Pressable
-                    onPress={() => {
-                      const phoneNumber = subItem.phone;
-                      if (phoneNumber) {
-                        Linking.openURL(`sms:${phoneNumber}`)
-                          .then(() => {})
-                          .catch(error => {
-                            console.error(
-                              'Failed to open messaging app: ',
-                              error,
-                            );
-                          });
-                      } else {
-                        console.warn('Phone number is not available');
-                      }
-                    }}
-                    disabled={false}
-                    style={[styles.button, {marginBottom: 10, marginRight: 8}]}>
-                    <Icon
-                      name="envelope-o"
-                      size={18}
+                        styles.button,
+                        {marginBottom: 10, marginLeft: 8},
+                      ]}>
+                      <Icon
+                        name="whatsapp"
+                        size={18}
+                        style={[
+                          styles.whatsappIcon,
+                          {
+                            marginBottom: 10,
+                            marginRight: 8,
+                            backgroundColor: '#25d366',
+                          },
+                        ]}
+                      />
+                    </Pressable>
+                    <Pressable
+                      onPress={() => {
+                        const phoneNumber = subItem.phone;
+                        const countryCode = subItem.phone_country;
+                        if (phoneNumber && countryCode) {
+                          const fullPhoneNumber = `${countryCode}${phoneNumber}`;
+                          if (fullPhoneNumber) {
+                            Linking.openURL(`sms:${fullPhoneNumber}`)
+                              .then(() => {})
+                              .catch(error => {
+                                console.error(
+                                  'Failed to open messaging app: ',
+                                  error,
+                                );
+                              });
+                          } else {
+                            console.warn('Phone number is not available');
+                          }
+                        }
+                      }}
+                      disabled={false}
                       style={[
-                        styles.messageIcon,
-                        {
-                          marginBottom: 10,
-                          marginRight: 0,
-                          backgroundColor: '#F7AA25',
-                        },
-                      ]}
-                    />
-                  </Pressable>
+                        styles.button,
+                        {marginBottom: 10, marginRight: 8},
+                      ]}>
+                      <Icon
+                        name="envelope-o"
+                        size={18}
+                        style={[
+                          styles.messageIcon,
+                          {
+                            marginBottom: 10,
+                            marginRight: 8,
+                            backgroundColor: '#F7AA25',
+                          },
+                        ]}
+                      />
+                    </Pressable>
+                  </Text>
                 </View>
               ))}
             </View>
