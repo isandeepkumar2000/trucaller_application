@@ -13,7 +13,10 @@ import {
   ScrollView,
   ActivityIndicator,
   ToastAndroid,
+  RefreshControl,
 } from 'react-native';
+
+import {addNotesStore} from '../../../Store/AddNotesStore/addNotesStore';
 
 export const UpcomingEvents: React.FC<UpcomingEventProps> = observer(({id}) => {
   const fetchingUpcomingEventsData = async () => {
@@ -56,6 +59,15 @@ export const UpcomingEvents: React.FC<UpcomingEventProps> = observer(({id}) => {
     }
   };
 
+  const onRefresh = React.useCallback(() => {
+    addNotesStore.setAddRefreshing(true);
+    fetchingUpcomingEventsData();
+
+    setTimeout(() => {
+      addNotesStore.setAddRefreshing(false);
+    }, 2000);
+  }, []);
+
   useEffect(() => {
     fetchingUpcomingEventsData();
   }, []);
@@ -63,8 +75,20 @@ export const UpcomingEvents: React.FC<UpcomingEventProps> = observer(({id}) => {
   const arrayLength = upcomingEventStore.upcomingEventDetails.length;
 
   return (
-    <SafeAreaView style={styles.safeAreaView}>
-      <ScrollView contentInsetAdjustmentBehavior="automatic">
+    <SafeAreaView style={styles.upcomingsafeAreaView}>
+      <ScrollView
+        contentInsetAdjustmentBehavior="automatic"
+        refreshControl={
+          <RefreshControl
+            refreshing={addNotesStore.addRefreshing}
+            onRefresh={onRefresh}
+            colors={['#B6488D']}
+            tintColor="#B6488D"
+            title="Pull to refresh"
+            titleColor="#B6488D"
+          />
+        }
+        style={{backgroundColor: '#ECEFF8'}}>
         {upcomingEventStore.isLoading ? (
           <ActivityIndicator size="large" color="#B6488D" />
         ) : (

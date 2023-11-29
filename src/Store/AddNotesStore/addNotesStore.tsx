@@ -13,6 +13,7 @@ class AddNotesStore {
   flagUnsetDate: Date | null = null;
   errorMessage: string = '';
   expandedIndex: number | null = null;
+  addRefreshing: boolean = false;
 
   constructor() {
     makeObservable(this, {
@@ -22,6 +23,7 @@ class AddNotesStore {
       flagUnsetDate: observable,
       errorMessage: observable,
       isLoading: observable,
+      addRefreshing: observable,
       selectedFlag: observable,
       selectedUnSetTypeFlag: observable,
       selectedSetTypeFlag: observable,
@@ -29,6 +31,7 @@ class AddNotesStore {
       showFlagUnsetDatePicker: observable,
       expandedIndex: observable,
       deleteNote: action.bound,
+      setAddRefreshing: action.bound,
       toggleAccordion: action.bound,
       setAddNotesData: action.bound,
       setStudentNotes: action.bound,
@@ -45,6 +48,10 @@ class AddNotesStore {
     this.selectedFlag = 'no_flag';
     this.selectedSetTypeFlag = 'immediately';
     this.selectedUnSetTypeFlag = 'no_unset_date';
+  }
+
+  setAddRefreshing(addRefreshing: boolean) {
+    this.addRefreshing = this.addRefreshing;
   }
 
   setAddNotesData(addNotesData: any[]) {

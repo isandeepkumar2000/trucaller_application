@@ -11,9 +11,12 @@ import {
   TouchableHighlight,
   SafeAreaView,
   ScrollView,
+  useColorScheme,
 } from 'react-native';
 
 const NotesScreen = observer(() => {
+  const colorScheme = useColorScheme();
+  const dynamicStyles = styles(colorScheme);
   const route = useRoute();
   const {firstname, lastname, id, joining_date} = route.params;
   const [activeComponent, setActiveComponent] = useState('AddNotes');
@@ -27,26 +30,30 @@ const NotesScreen = observer(() => {
   };
 
   return (
-    <SafeAreaView style={styles.safeAreaView}>
-      <ScrollView contentInsetAdjustmentBehavior="automatic">
-        <View style={[styles.header]}>
-          <Text style={styles.nameHeading}>{`${firstname} ${lastname}`}</Text>
+    <SafeAreaView style={dynamicStyles.notessafeAreaView}>
+      <ScrollView
+        contentInsetAdjustmentBehavior="automatic"
+        style={{backgroundColor: '#ECEFF8'}}>
+        <View style={[dynamicStyles.header]}>
+          <Text
+            style={
+              dynamicStyles.nameHeading
+            }>{`${firstname} ${lastname}`}</Text>
 
-          <Text style={styles.EnrolledDate}>
+          <Text style={dynamicStyles.EnrolledDate}>
             Enrolled on {`${joining_date}`}
           </Text>
         </View>
 
-        <View style={[styles.parentRow, {backgroundColor: '#ECEFF8'}]}>
-          <View style={styles.buttonContainer}>
+        <View style={[dynamicStyles.parentRow, {backgroundColor: '#ECEFF8'}]}>
+          <View style={dynamicStyles.buttonContainer}>
             <TouchableHighlight
               onPress={switchToAddNotes}
               style={[
-                styles.button,
+                dynamicStyles.button,
                 {
                   backgroundColor:
                     activeComponent === 'AddNotes' ? '#2196F3' : '#70B8FB',
-
                   width: 'auto',
                   paddingTop: 20,
                   borderTopLeftRadius: 50,
@@ -68,13 +75,13 @@ const NotesScreen = observer(() => {
                   </Text>
                 )}
 
-                <Text style={styles.buttonText}>New Note</Text>
+                <Text style={dynamicStyles.buttonText}>New Note</Text>
               </>
             </TouchableHighlight>
             <TouchableHighlight
               onPress={switchToViewNotes}
               style={[
-                styles.button,
+                dynamicStyles.button,
                 {
                   backgroundColor:
                     activeComponent === 'ViewNotes' ? '#2196F3' : '#70B8FB',
@@ -97,7 +104,7 @@ const NotesScreen = observer(() => {
                     />
                   </Text>
                 )}
-                <Text style={styles.buttonText}>View Notes</Text>
+                <Text style={dynamicStyles.buttonText}>View Notes</Text>
               </>
             </TouchableHighlight>
           </View>

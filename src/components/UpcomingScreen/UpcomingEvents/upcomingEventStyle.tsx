@@ -9,9 +9,9 @@ export const styles = StyleSheet.create({
     justifyContent: 'space-between',
     flexDirection: 'row',
   },
-  safeAreaView: {
+  upcomingsafeAreaView: {
     flex: 1,
-    // backgroundColor: '#fff',
+    // backgroundColor: 'transparent',
   },
   pageHeading: {
     width: '100%',

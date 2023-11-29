@@ -17,10 +17,32 @@ import {
   ToastAndroid,
   Image,
   Text,
+  useColorScheme,
+  RefreshControl,
 } from 'react-native';
 
 export const StudentList = observer(() => {
+  const colorScheme = useColorScheme();
+
+  const getTextColor = () => {
+    return colorScheme === 'dark' ? '#b6488d' : '#b6488d';
+  };
+
+  const getBackgroundColor = () => {
+    return colorScheme === 'dark' ? '#FFFFFF' : '#FFFFFF';
+  };
+
   const [searchInitiated, setSearchInitiated] = useState(false);
+
+  const onRefresh = React.useCallback(() => {
+    homePageStore.setRefreshing(true);
+    fetchHomePageData();
+
+    setTimeout(() => {
+      homePageStore.setRefreshing(false);
+    }, 2000);
+  }, []);
+
   const fetchHomePageData = async () => {
     homePageStore.setIsLoading(true);
     try {
@@ -84,8 +106,20 @@ export const StudentList = observer(() => {
   };
 
   return (
-    <SafeAreaView style={[styles.saferView]}>
-      <ScrollView contentInsetAdjustmentBehavior="automatic">
+    <SafeAreaView
+      style={[styles.saferView, {backgroundColor: getBackgroundColor()}]}>
+      <ScrollView
+        contentInsetAdjustmentBehavior="automatic"
+        refreshControl={
+          <RefreshControl
+            refreshing={homePageStore.refreshing}
+            onRefresh={onRefresh}
+            colors={['#B6488D']}
+            tintColor="#B6488D"
+            title="Pull to refresh"
+            titleColor="#B6488D"
+          />
+        }>
         <View
           style={{
             paddingLeft: 20,
@@ -111,10 +145,13 @@ export const StudentList = observer(() => {
             }}>
             <TextInput
               placeholder="Enter student name to search"
-              style={styles.inputStyles}
+              style={[styles.inputStyles, {color: getTextColor()}]}
               onChangeText={handleInputChange}
               value={homePageStore.searchQuery}
               onSubmitEditing={handleInputSubmit}
+              placeholderTextColor={getTextColor()}
+
+              // placeholderTextColor={getTextColor()}
             />
             <Pressable
               onPress={handleSearch}
@@ -145,7 +182,8 @@ export const StudentList = observer(() => {
             style={styles.loader}
           />
         ) : (
-          <View style={styles.container}>
+          <View
+            style={[styles.container, {backgroundColor: getBackgroundColor()}]}>
             {homePageStore.searchQuery.trim() === '' ? (
               <Text
                 style={{
@@ -153,8 +191,8 @@ export const StudentList = observer(() => {
                   fontSize: 28,
                   paddingHorizontal: 50,
                   paddingVertical: 260,
-                  color: '#B6488D',
                   fontWeight: '500',
+                  color: getTextColor(),
                 }}>
                 Enter student name to search
               </Text>

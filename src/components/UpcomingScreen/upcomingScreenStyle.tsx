@@ -1,7 +1,7 @@
 import {StyleSheet} from 'react-native';
 
 export const styles = StyleSheet.create({
-  safeAreaView: {
+  upcomingsafeAreaView: {
     flex: 1,
     // backgroundColor: '#fff',
   },

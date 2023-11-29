@@ -30,8 +30,10 @@ const UpcomingScreen = observer(() => {
   };
 
   return (
-    <SafeAreaView style={styles.safeAreaView}>
-      <ScrollView contentInsetAdjustmentBehavior="automatic">
+    <SafeAreaView style={styles.upcomingsafeAreaView}>
+      <ScrollView
+        contentInsetAdjustmentBehavior="automatic"
+        style={{backgroundColor: '#ECEFF8'}}>
         <View style={styles.topBar}>
           <View style={styles.headerImage}>
             <Image

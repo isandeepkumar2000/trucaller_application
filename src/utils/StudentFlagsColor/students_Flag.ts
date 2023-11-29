@@ -1,5 +1,5 @@
 export const StudentFlagsData: Record<string, string> = {
-  no_flag: 'black',
+  no_flag: '#000',
   grey: '#CFCFCF',
   blue: '#057FE1',
   yellow: '#FFC107',

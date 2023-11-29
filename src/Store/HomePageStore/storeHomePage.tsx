@@ -5,6 +5,7 @@ class HomePageStore {
   searchQuery: string = '';
   isLoading: boolean = false;
   profilePic: string = '';
+  refreshing: boolean = false;
 
   constructor() {
     makeObservable(this, {
@@ -12,11 +13,16 @@ class HomePageStore {
       searchQuery: observable,
       isLoading: observable,
       profilePic: observable,
+      refreshing: observable,
+      setRefreshing: action.bound,
       setProfilePic: action.bound,
       setSearchQuery: action.bound,
       setStudentData: action.bound,
       setIsLoading: action.bound,
     });
+  }
+  setRefreshing(refreshing: boolean) {
+    this.refreshing = this.refreshing;
   }
 
   setIsLoading(isLoading: boolean) {

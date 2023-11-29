@@ -1,11 +1,16 @@
 import React, {useState} from 'react';
 import {observer} from 'mobx-react';
-import {styles} from './addNotesstyle';
 import RadioGroup from 'react-native-radio-buttons-group';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useNavigation} from '@react-navigation/native';
-import {ActivityIndicator, Alert} from 'react-native';
+import {
+  ActivityIndicator,
+  Alert,
+  RefreshControl,
+  ScrollView,
+  useColorScheme,
+} from 'react-native';
 import {addNotesStore} from '../../../Store/AddNotesStore/addNotesStore';
 import {AddNotesProps} from '../../../utils/DataTypeInterface/students_Data_Type';
 
@@ -22,8 +27,11 @@ import {
   FlagSetType,
   FlagUnSetType,
 } from '../../../utils/FlagRadioButton/flagRadioButton';
+import {styles} from './addNotesstyle';
 
 export const AddNotesSection: React.FC<AddNotesProps> = observer(({id}) => {
+  const colorScheme = useColorScheme();
+  const dynamicStyles = styles(colorScheme);
   const [minUnsetDate, setMinUnsetDate] = useState<Date>(new Date());
   const [isLoading, setIsLoading] = useState(false);
   const navigation = useNavigation();
@@ -77,6 +85,13 @@ export const AddNotesSection: React.FC<AddNotesProps> = observer(({id}) => {
     const month = (date.getMonth() + 1).toString().padStart(2, '0');
     const year = date.getFullYear();
     return `${day}/${month}/${year}`;
+  };
+  const getTextColor = () => {
+    return colorScheme === 'dark' ? '#b6488d' : '#b6488d';
+  };
+
+  const getDateColor = () => {
+    return colorScheme === 'dark' ? '#000000' : '#000000';
   };
 
   const handleRadioButtonChange = (value: string) => {
@@ -171,11 +186,11 @@ export const AddNotesSection: React.FC<AddNotesProps> = observer(({id}) => {
         <View style={{marginTop: 10}}>
           <View
             style={[
-              styles.flagNotesContainer,
+              dynamicStyles.flagNotesContainer,
               {marginTop: 10, marginBottom: 0},
             ]}>
-            <Text style={styles.flagNotesLabel}>Flag set Type</Text>
-            <Text style={styles.flagNotesDescription}>
+            <Text style={dynamicStyles.flagNotesLabel}>Flag set Type</Text>
+            <Text style={dynamicStyles.flagNotesDescription}>
               Please select the flag set type here
             </Text>
           </View>
@@ -183,13 +198,14 @@ export const AddNotesSection: React.FC<AddNotesProps> = observer(({id}) => {
             radioButtons={FlagSetType}
             onPress={handleRadioButtonSetChange}
             selectedId={selectedSetTypeFlag}
-            containerStyle={styles.radioButtonContainerFlag}
+            containerStyle={dynamicStyles.radioButtonContainerFlag}
           />
           {selectedSetTypeFlag !== 'immediately' && (
             <>
-              <View style={[styles.flagNotesContainer, {marginBottom: 0}]}>
-                <Text style={styles.flagNotesLabel}>Flag set Date</Text>
-                <Text style={styles.flagNotesDescription}>
+              <View
+                style={[dynamicStyles.flagNotesContainer, {marginBottom: 0}]}>
+                <Text style={dynamicStyles.flagNotesLabel}>Flag set Date</Text>
+                <Text style={dynamicStyles.flagNotesDescription}>
                   Please select the flag set date here
                 </Text>
               </View>
@@ -200,10 +216,14 @@ export const AddNotesSection: React.FC<AddNotesProps> = observer(({id}) => {
                 }}>
                 <TouchableHighlight
                   onPress={showFlagSetDatePickerHandler}
-                  style={styles.dateContainer}>
-                  <View style={styles.datePickerContainer}>
-                    <Text style={styles.datePickerIcon}>📅</Text>
-                    <Text style={styles.selectedDateText}>
+                  style={dynamicStyles.dateContainer}>
+                  <View style={dynamicStyles.datePickerContainer}>
+                    <Text style={dynamicStyles.datePickerIcon}>📅</Text>
+                    <Text
+                      style={[
+                        dynamicStyles.selectedDateText,
+                        {color: getDateColor()},
+                      ]}>
                       {addNotesStore.flagSetDate
                         ? formatDate(addNotesStore.flagSetDate)
                         : 'DD/MM/YYYY'}
@@ -232,9 +252,9 @@ export const AddNotesSection: React.FC<AddNotesProps> = observer(({id}) => {
   const FlatUnsetType = () => {
     return (
       <>
-        <View style={[styles.flagNotesContainer, {marginBottom: 0}]}>
-          <Text style={styles.flagNotesLabel}>Flag Unset Type</Text>
-          <Text style={styles.flagNotesDescription}>
+        <View style={[dynamicStyles.flagNotesContainer, {marginBottom: 0}]}>
+          <Text style={dynamicStyles.flagNotesLabel}>Flag Unset Type</Text>
+          <Text style={dynamicStyles.flagNotesDescription}>
             Please select the flag unset type here
           </Text>
         </View>
@@ -243,15 +263,15 @@ export const AddNotesSection: React.FC<AddNotesProps> = observer(({id}) => {
             radioButtons={FlagUnSetType}
             onPress={handleRadioButtonUnSetChange}
             selectedId={selectedUnSetTypeFlag}
-            containerStyle={styles.radioButtonContainerFlag}
+            containerStyle={dynamicStyles.radioButtonContainerFlag}
           />
         </View>
 
         {selectedUnSetTypeFlag !== 'no_unset_date' && (
           <>
-            <View style={styles.flagNotesContainer}>
-              <Text style={styles.flagNotesLabel}>Flag Unset Date</Text>
-              <Text style={styles.flagNotesDescription}>
+            <View style={dynamicStyles.flagNotesContainer}>
+              <Text style={dynamicStyles.flagNotesLabel}>Flag Unset Date</Text>
+              <Text style={dynamicStyles.flagNotesDescription}>
                 Please select the flag unset date here
               </Text>
             </View>
@@ -259,13 +279,18 @@ export const AddNotesSection: React.FC<AddNotesProps> = observer(({id}) => {
               style={{
                 borderStyle: 'solid',
                 padding: 5,
+                // backgroundColor: 'black',
               }}>
               <TouchableHighlight
                 onPress={showFlagUnsetDatePickerHandler}
-                style={styles.dateContainer}>
-                <View style={styles.datePickerContainer}>
-                  <Text style={styles.datePickerIcon}>📅</Text>
-                  <Text style={styles.selectedDateText}>
+                style={dynamicStyles.dateContainer}>
+                <View style={dynamicStyles.datePickerContainer}>
+                  <Text style={dynamicStyles.datePickerIcon}>📅</Text>
+                  <Text
+                    style={[
+                      dynamicStyles.selectedDateText,
+                      {color: getDateColor()},
+                    ]}>
                     {addNotesStore.flagUnsetDate
                       ? formatDate(addNotesStore.flagUnsetDate)
                       : 'DD/MM/YYYY'}
@@ -291,23 +316,25 @@ export const AddNotesSection: React.FC<AddNotesProps> = observer(({id}) => {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={dynamicStyles.container}>
       {isLoading && <ActivityIndicator size="large" color="#B6488D" />}
       <View>
-        <View style={[styles.textInputContainer, {marginTop: 20}]}>
+        <View style={[dynamicStyles.textInputContainer, {marginTop: 20}]}>
           <TextInput
             multiline
             placeholder="Please enter the notes here"
-            style={styles.textInput}
+            style={dynamicStyles.textInput}
             value={studentNotes}
             onChangeText={text => setStudentNotes(text)}
+            placeholderTextColor={getTextColor()}
+            // placeholderTextColor={dynamicStyles.textl}
           />
         </View>
       </View>
       <View>
-        <View style={styles.flagNotesContainer}>
-          <Text style={styles.flagNotesLabel}>Flag Notes</Text>
-          <Text style={styles.flagNotesDescription}>
+        <View style={dynamicStyles.flagNotesContainer}>
+          <Text style={dynamicStyles.flagNotesLabel}>Flag Notes</Text>
+          <Text style={dynamicStyles.flagNotesDescription}>
             Please select the note's flag here
           </Text>
         </View>
@@ -316,7 +343,7 @@ export const AddNotesSection: React.FC<AddNotesProps> = observer(({id}) => {
         radioButtons={FlagNotes}
         onPress={handleRadioButtonChange}
         selectedId={selectedFlag}
-        containerStyle={styles.radioButtonContainer}
+        containerStyle={dynamicStyles.radioButtonContainer}
       />
       {selectedFlag === 'new_registration' ||
       selectedFlag === 'no_flag' ? null : (
@@ -327,14 +354,16 @@ export const AddNotesSection: React.FC<AddNotesProps> = observer(({id}) => {
       )}
 
       {addNotesStore.errorMessage ? (
-        <Text style={styles.errorMessage}>{addNotesStore.errorMessage}</Text>
+        <Text style={dynamicStyles.errorMessage}>
+          {addNotesStore.errorMessage}
+        </Text>
       ) : null}
 
-      <View style={styles.buttonContainer}>
+      <View style={dynamicStyles.buttonContainer}>
         <Pressable
           onPress={onPressCancelButton}
           style={({pressed}) => [
-            styles.button,
+            dynamicStyles.button,
             {
               backgroundColor: '#0073DA',
               height: 58,
@@ -344,12 +373,12 @@ export const AddNotesSection: React.FC<AddNotesProps> = observer(({id}) => {
               borderBottomLeftRadius: 40,
             },
           ]}>
-          <Text style={styles.buttonText}>Cancel</Text>
+          <Text style={dynamicStyles.buttonText}>Cancel</Text>
         </Pressable>
         <Pressable
           onPress={handleSubmit}
           style={({pressed}) => [
-            styles.button,
+            dynamicStyles.button,
             {
               backgroundColor: pressed ? 'pink' : '#B6488D',
               marginLeft: 20,
@@ -360,7 +389,7 @@ export const AddNotesSection: React.FC<AddNotesProps> = observer(({id}) => {
               borderBottomLeftRadius: 40,
             },
           ]}>
-          <Text style={styles.buttonText}>Submit</Text>
+          <Text style={dynamicStyles.buttonText}>Submit</Text>
         </Pressable>
       </View>
     </View>

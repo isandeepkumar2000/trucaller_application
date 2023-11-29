@@ -1,5 +1,10 @@
 import React, {useState} from 'react';
-import {ActivityIndicator, ToastAndroid, View} from 'react-native';
+import {
+  ActivityIndicator,
+  ToastAndroid,
+  View,
+  useColorScheme,
+} from 'react-native';
 import {Dropdown} from 'react-native-element-dropdown';
 import {observer} from 'mobx-react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -10,6 +15,7 @@ import {UpdateUpcomingAttendanceProps} from '../../utils/DataTypeInterface/stude
 
 export const UpdateUpcomingAttendance: React.FC<UpdateUpcomingAttendanceProps> =
   observer(({eventId, attendanceApiStatus, id}) => {
+    const colorScheme = useColorScheme();
     const [isLoading, setIsLoading] = useState(false);
     const fetchingUpcomingAttendanceStatus = async (selectedItem: string) => {
       setIsLoading(true);
@@ -71,7 +77,12 @@ export const UpdateUpcomingAttendance: React.FC<UpdateUpcomingAttendanceProps> =
         <Dropdown
           style={styles.dropdown}
           placeholderStyle={styles.placeholderStyle}
-          selectedTextStyle={styles.selectedTextStyle}
+          itemTextStyle={{
+            color: colorScheme === 'dark' ? 'black' : 'black',
+          }}
+          selectedTextStyle={{
+            color: colorScheme === 'dark' ? 'black' : 'black',
+          }}
           inputSearchStyle={styles.inputSearchStyle}
           iconStyle={styles.dropdownIcon}
           data={AttendanceStatusCode}

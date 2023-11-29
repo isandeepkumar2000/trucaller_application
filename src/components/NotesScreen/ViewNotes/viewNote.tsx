@@ -5,7 +5,7 @@ import {observer} from 'mobx-react';
 import {styles} from './viewNotesStyle';
 import {addNotesStore} from '../../../Store/AddNotesStore/addNotesStore';
 import {ViewNotesProps} from '../../../utils/DataTypeInterface/students_Data_Type';
-
+import {homePageStore} from './../../../Store/HomePageStore/storeHomePage';
 import {
   View,
   Text,
@@ -15,6 +15,7 @@ import {
   TouchableOpacity,
   ToastAndroid,
   Alert,
+  RefreshControl,
 } from 'react-native';
 
 export const ViewNotes: React.FC<ViewNotesProps> = observer(({id}) => {
@@ -47,6 +48,14 @@ export const ViewNotes: React.FC<ViewNotesProps> = observer(({id}) => {
       console.error('An error occurred while deleting the note:', error);
     }
   };
+
+  const onRefresh = React.useCallback(() => {
+    homePageStore.setRefreshing(true);
+    fetchViewNotesData();
+    setTimeout(() => {
+      homePageStore.setRefreshing(false);
+    }, 2000);
+  }, []);
 
   const fetchViewNotesData = async () => {
     addNotesStore.setIsLoading(true);
@@ -127,7 +136,18 @@ export const ViewNotes: React.FC<ViewNotesProps> = observer(({id}) => {
 
   return (
     <SafeAreaView>
-      <ScrollView contentInsetAdjustmentBehavior="automatic">
+      <ScrollView
+        contentInsetAdjustmentBehavior="automatic"
+        refreshControl={
+          <RefreshControl
+            refreshing={homePageStore.refreshing}
+            onRefresh={onRefresh}
+            colors={['#B6488D']}
+            tintColor="#B6488D"
+            title="Pull to refresh"
+            titleColor="#B6488D"
+          />
+        }>
         {isDeleting || addNotesStore.isLoading ? (
           <ActivityIndicator size="large" color="#B6488D" />
         ) : (

@@ -23,6 +23,7 @@ export const styles = StyleSheet.create({
     height: 55,
     paddingRight: 20,
     fontSize: 18,
+    color: '#FFFFFF',
   },
   loader: {
     marginTop: 20,

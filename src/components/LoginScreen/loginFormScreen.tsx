@@ -19,9 +19,19 @@ import {
   Pressable,
   ActivityIndicator,
   ToastAndroid,
+  useColorScheme,
 } from 'react-native';
 
 export const LoginScreen = observer(({navigation}: LoginScreenProps) => {
+  const colorScheme = useColorScheme();
+
+  const getTextColor = () => {
+    return colorScheme === 'dark' ? '#b6488d' : '#b6488d';
+  };
+
+  const getBackgroundColor = () => {
+    return colorScheme === 'dark' ? '#FFFFFF' : '#FFFFFF';
+  };
   const handleLogin = async () => {
     if (!authStore.email || !authStore.password || !authStore.selectedItem) {
       ToastAndroid.showWithGravity(
@@ -104,7 +114,12 @@ export const LoginScreen = observer(({navigation}: LoginScreenProps) => {
             <Dropdown
               style={styles.dropdown}
               placeholderStyle={styles.placeholderStyle}
-              selectedTextStyle={styles.selectedTextStyle}
+              itemTextStyle={{
+                color: colorScheme === 'dark' ? 'black' : 'black',
+              }}
+              selectedTextStyle={{
+                color: colorScheme === 'dark' ? 'black' : 'black',
+              }}
               inputSearchStyle={styles.inputSearchStyle}
               iconStyle={styles.dropdownIcon}
               data={data}

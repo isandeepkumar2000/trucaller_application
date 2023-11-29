@@ -42,7 +42,7 @@ export const styles = StyleSheet.create({
     borderBottomRightRadius: 20,
     borderBottomLeftRadius: 20,
     paddingHorizontal: 10,
-    backgroundColor: 'white',
+    backgroundColor: '#fff',
     marginTop: 10,
   },
   inputIcon: {
@@ -56,7 +56,7 @@ export const styles = StyleSheet.create({
   },
   dropdown: {
     height: 50,
-    backgroundColor: 'white',
+    backgroundColor: '#fff',
     borderBottomColor: 'black',
     borderBottomWidth: 0.5,
     marginBottom: 20,
@@ -66,6 +66,8 @@ export const styles = StyleSheet.create({
     borderBottomLeftRadius: 20,
     marginTop: 12,
     fontSize: 16,
+    color: 'red',
+    getTextColor: 'red',
   },
   dropdownIcon: {
     width: 20,
