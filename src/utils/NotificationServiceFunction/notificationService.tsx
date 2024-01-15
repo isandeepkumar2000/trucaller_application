@@ -84,6 +84,7 @@ export const DisplayNotification = async (RemoteMessage: any) => {
       colorized: true,
       timestamp: Date.now(),
       showTimestamp: true,
+      importance: AndroidImportance.HIGH,
     },
   });
 };

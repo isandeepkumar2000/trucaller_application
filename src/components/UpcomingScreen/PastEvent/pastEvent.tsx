@@ -15,7 +15,9 @@ import {
   ActivityIndicator,
   ToastAndroid,
   Pressable,
+  RefreshControl,
 } from 'react-native';
+import {homePageStore} from '../../../Store/HomePageStore/storeHomePage';
 
 export const PastEvent: React.FC<PastEventProps> = observer(({id}) => {
   const toggleAccordion = (index: any) => {
@@ -26,6 +28,15 @@ export const PastEvent: React.FC<PastEventProps> = observer(({id}) => {
     }
   };
   const arrayLength = upcomingEventStore.pastEventData.length;
+
+  const onRefresh = React.useCallback(() => {
+    homePageStore.setRefreshing(true);
+    fetchingPastEventsData();
+
+    setTimeout(() => {
+      homePageStore.setRefreshing(false);
+    }, 2000);
+  }, []);
 
   const fetchingPastEventsData = async () => {
     upcomingEventStore.setIsLoading(true);
@@ -73,7 +84,18 @@ export const PastEvent: React.FC<PastEventProps> = observer(({id}) => {
 
   return (
     <SafeAreaView style={[styles.saferView]}>
-      <ScrollView contentInsetAdjustmentBehavior="automatic">
+      <ScrollView
+        contentInsetAdjustmentBehavior="automatic"
+        refreshControl={
+          <RefreshControl
+            refreshing={homePageStore.refreshing}
+            onRefresh={onRefresh}
+            colors={['#B6488D']}
+            tintColor="#B6488D"
+            title="Pull to refresh"
+            titleColor="#B6488D"
+          />
+        }>
         {upcomingEventStore.isLoading ? (
           <ActivityIndicator size="large" color="#B6488D" />
         ) : (
@@ -91,7 +113,6 @@ export const PastEvent: React.FC<PastEventProps> = observer(({id}) => {
                     marginBottom: 15,
                     padding: 0,
                     paddingBottom: 25,
-
                     borderTopLeftRadius: 25,
                     borderTopRightRadius: 25,
                     borderBottomRightRadius: 25,

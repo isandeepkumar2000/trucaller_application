@@ -124,6 +124,7 @@ class AuthStore {
             device_token: FCMToken,
           }),
         });
+
         if (response.status === 200) {
           const responseData = await response.json();
           if (responseData.status === 'Success') {
@@ -136,7 +137,7 @@ class AuthStore {
           } else {
             runInAction(() => {
               this.isLoggedIn = false;
-              this.errorMessage = 'Invalid password';
+              this.errorMessage = responseData.message || 'An error occurred';
             });
           }
         } else {
@@ -148,7 +149,7 @@ class AuthStore {
           let errorMessage = 'An error occurred while processing your request.';
           try {
             const errorResponseData = await response.json();
-            if (errorResponseData.message) {
+            if (errorResponseData && errorResponseData.message) {
               errorMessage = errorResponseData.message;
             }
           } catch (error) {}
