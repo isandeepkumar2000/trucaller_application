@@ -151,7 +151,7 @@ const App = observer(() => {
         BackgroundService.stop();
       }
     };
-  }, [isBackgroundServiceStarted]);
+  }, []);
 
   const handleLogout = action(async () => {
     try {
