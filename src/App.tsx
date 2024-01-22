@@ -2,11 +2,15 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import BackgroundService from 'react-native-background-actions';
+
+const sleep = (time: number): Promise<void> =>
+  new Promise(resolve => setTimeout(() => resolve(), time));
 
 import NotesScreen from './components/NotesScreen/notesScreen';
 import UpcomingScreen from './components/UpcomingScreen/upcomingScreen';
 
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {action, runInAction} from 'mobx';
 import {observer} from 'mobx-react';
 import {homePageStore} from './Store/HomePageStore/storeHomePage';
@@ -34,6 +38,30 @@ import {requestPermissions} from './utils/AndroidUserPermissionRequest/userPermi
 
 const MainStack = createNativeStackNavigator();
 const AuthStack = createNativeStackNavigator();
+
+const veryIntensiveTask = async (taskDataArguments?: {
+  delay?: number;
+}): Promise<void> => {
+  const delay = taskDataArguments?.delay ?? 1000;
+  while (BackgroundService.isRunning()) {
+    await sleep(delay);
+  }
+};
+
+const options = {
+  taskName: 'Example',
+  taskTitle: 'Sip Abacus Lms Background',
+  taskDesc: '',
+  taskIcon: {
+    name: 'ic_launcher',
+    type: 'mipmap',
+  },
+  color: '#ff00ff',
+  linkingURI: 'yourSchemeHere://chat/jane',
+  parameters: {
+    delay: 5000,
+  },
+};
 
 function MainScreens() {
   return (
@@ -91,11 +119,39 @@ const LoaderComponent = () => (
 );
 
 const App = observer(() => {
+  const [isBackgroundServiceStarted, setIsBackgroundServiceStarted] =
+    useState(false);
+
+  const startBackgroundService = async () => {
+    try {
+      await BackgroundService.start(veryIntensiveTask, options);
+      setIsBackgroundServiceStarted(true);
+    } catch (error) {
+      console.error('Error starting background service:', error);
+      setIsBackgroundServiceStarted(false);
+    }
+  };
+
   useEffect(() => {
-    requestUserPermission();
-    NotificationListener();
-    requestPermissions();
-  }, []);
+    const initializeApp = async () => {
+      try {
+        requestUserPermission();
+        NotificationListener();
+        requestPermissions();
+        await startBackgroundService();
+      } catch (error) {
+        console.error('Error initializing app:', error);
+      }
+    };
+
+    initializeApp();
+
+    return () => {
+      if (isBackgroundServiceStarted) {
+        BackgroundService.stop();
+      }
+    };
+  }, [isBackgroundServiceStarted]);
 
   const handleLogout = action(async () => {
     try {
