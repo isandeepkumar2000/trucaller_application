@@ -20,4 +20,10 @@ export const data = [
     value: '5',
     apiUrl: 'https://takanini.sipabacuslms.co.nz/api/',
   },
+
+  {
+    label: 'Henderson',
+    value: '6',
+    apiUrl: 'https://henderson.sipabacuslms.co.nz/api/',
+  },
 ];
