@@ -6,6 +6,7 @@ class AddNotesStore {
   selectedFlag: string = '';
   isLoading: boolean = false;
   selectedUnSetTypeFlag: string = '';
+  selectedAdminOnly: string = '';
   selectedSetTypeFlag: string = '';
   showFlagSetDatePicker: boolean = false;
   showFlagUnsetDatePicker: boolean = false;
@@ -30,6 +31,7 @@ class AddNotesStore {
       showFlagSetDatePicker: observable,
       showFlagUnsetDatePicker: observable,
       expandedIndex: observable,
+      selectedAdminOnly: observable,
       deleteNote: action.bound,
       setAddRefreshing: action.bound,
       toggleAccordion: action.bound,
@@ -44,10 +46,12 @@ class AddNotesStore {
       setSelectedSetTypeFlag: action.bound,
       setShowFlagSetDatePicker: action.bound,
       setShowFlagUnsetDatePicker: action.bound,
+      setSelectedAdminOnly: action.bound,
     });
-    this.selectedFlag = 'no_flag';
-    this.selectedSetTypeFlag = 'immediately';
-    this.selectedUnSetTypeFlag = 'no_unset_date';
+    this.selectedFlag = '1';
+    this.selectedSetTypeFlag = '1';
+    this.selectedUnSetTypeFlag = '1';
+    this.selectedAdminOnly = '2';
   }
 
   setAddRefreshing(addRefreshing: boolean) {
@@ -67,6 +71,11 @@ class AddNotesStore {
   setSelectedUnSetTypeFlag(selectedUnSetTypeFlag: string) {
     this.selectedUnSetTypeFlag = selectedUnSetTypeFlag;
   }
+
+  setSelectedAdminOnly(selectedAdminOnly: string) {
+    this.selectedAdminOnly = selectedAdminOnly;
+  }
+
   setIsLoading(isLoading: boolean) {
     this.isLoading = isLoading;
   }

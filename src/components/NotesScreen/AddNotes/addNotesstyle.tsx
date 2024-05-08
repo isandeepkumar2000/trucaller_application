@@ -135,14 +135,19 @@ export const styles = (colorScheme: any) =>
       marginBottom: 5,
       marginTop: 10,
     },
+
+    AdminOnlyNotes: {
+      marginBottom: 5,
+      marginTop: 15,
+    },
     flagNotesLabel: {
       color: colorScheme === 'dark' ? '#057FE1' : '#057FE1',
       fontWeight: '500',
-      fontSize: 16,
+      fontSize: 14,
     },
     flagNotesDescription: {
       fontWeight: '400',
-      fontSize: 12,
+      fontSize: 10,
       color: colorScheme === 'dark' ? 'gray' : 'gray',
     },
     radioButtonContainer: {

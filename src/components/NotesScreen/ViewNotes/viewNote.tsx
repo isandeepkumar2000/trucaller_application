@@ -76,6 +76,7 @@ export const ViewNotes: React.FC<ViewNotesProps> = observer(({id}) => {
           body: JSON.stringify(requestBody),
         });
         const responseBody = await response.json();
+        console.log('responseBody', responseBody);
 
         if (response.ok) {
           const notes = responseBody.data || [];
@@ -246,8 +247,18 @@ export const ViewNotes: React.FC<ViewNotesProps> = observer(({id}) => {
                     </TouchableOpacity>
                   </TouchableOpacity>
                 )}
-
-                <View style={[styles.eventRight]}>
+                <View
+                  style={[
+                    styles.eventRight,
+                    item.only_admin === 1
+                      ? {paddingTop: 5, paddingBottom: 10}
+                      : {paddingTop: 25},
+                  ]}>
+                  {item.only_admin === 1 ? (
+                    <View style={[styles.adminOnlyView]}>
+                      <Text style={[styles.adminOnlyText]}>Admin Only</Text>
+                    </View>
+                  ) : null}
                   <Text style={[styles.eventLeftHeading]}>
                     {item.notes_added_by}{' '}
                     <Text
@@ -279,6 +290,32 @@ export const ViewNotes: React.FC<ViewNotesProps> = observer(({id}) => {
                         : 'View More..'}
                     </Text>
                   </TouchableOpacity>
+                  <View>
+                    {item.future_flag_to_be_raised !== null ? (
+                      <View style={[styles.RaiseFlagView]}>
+                        <Text style={[styles.RaiseFlagText]}>
+                          Raise Flag ({item.future_flag_to_be_raised}) -
+                          {item.future_flag_to_be_set_from}
+                        </Text>
+                      </View>
+                    ) : null}
+                    {item.future_flag_to_be_unset_from !== null ? (
+                      <View style={[styles.UnSetRaiseFlagView]}>
+                        <Text style={[styles.RaiseFlagText]}>
+                          Unset Flag - {item.future_flag_to_be_unset_from}
+                        </Text>
+                      </View>
+                    ) : null}
+
+                    {item.flag_deleted === 1 ? (
+                      <View style={[styles.deletedFlagView]}>
+                        <Text style={[styles.RaiseFlagText]}>
+                          {item.deleted_color} Flag removed by {item.deleted_by}{' '}
+                          on {item.flag_deleted_time}
+                        </Text>
+                      </View>
+                    ) : null}
+                  </View>
                 </View>
               </View>
             ))}

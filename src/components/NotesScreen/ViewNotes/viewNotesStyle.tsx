@@ -30,7 +30,7 @@ export const styles = StyleSheet.create({
   },
   eventRight: {
     width: '84%',
-    paddingTop: 25,
+
     paddingLeft: 0,
     paddingBottom: 25,
     paddingRight: 25,
@@ -43,11 +43,58 @@ export const styles = StyleSheet.create({
     fontSize: 16,
     textAlign: 'center',
   },
+
+  adminOnlyView: {
+    backgroundColor: 'blue',
+    padding: 5,
+    borderRadius: 5,
+    marginBottom: 20,
+    width: '28%',
+  },
+
+  RaiseFlagView: {
+    backgroundColor: 'lightgreen',
+    marginTop: 10,
+    borderRadius: 5,
+    marginBottom: 10,
+    width: '100%',
+  },
+
+  UnSetRaiseFlagView: {
+    backgroundColor: '#f09e2b',
+    marginTop: 5,
+    borderRadius: 5,
+    width: '100%',
+  },
+
+  deletedFlagView: {
+    backgroundColor: '#6cf0bd',
+    marginTop: 5,
+    borderRadius: 5,
+    width: '100%',
+  },
+
+  RaiseFlagText: {
+    color: 'black',
+    fontSize: 12,
+    marginBottom: 2,
+    fontWeight: '600',
+    padding: 5,
+  },
+
+  adminOnlyText: {
+    color: '#fff',
+    fontSize: 12,
+    marginBottom: 2,
+    fontWeight: '600',
+  },
+
   eventLeftHeading: {
     color: '#B6488D',
     fontSize: 20,
     marginBottom: 2,
     fontWeight: '600',
+    paddingTop: 0,
   },
   eventSubDetail: {
     color: '#262B35',

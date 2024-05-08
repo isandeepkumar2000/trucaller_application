@@ -131,3 +131,20 @@ export const FlagUnSetType = [
     borderSize: 2,
   },
 ];
+
+export const AdminOnlyButton = [
+  {
+    id: '1',
+    label: 'Yes',
+    value: 'yes',
+    size: 16,
+    borderSize: 2,
+  },
+  {
+    id: '2',
+    label: 'No',
+    value: 'no',
+    size: 16,
+    borderSize: 2,
+  },
+];

@@ -23,6 +23,7 @@ import {
   ToastAndroid,
 } from 'react-native';
 import {
+  AdminOnlyButton,
   FlagNotes,
   FlagSetType,
   FlagUnSetType,
@@ -42,12 +43,14 @@ export const AddNotesSection: React.FC<AddNotesProps> = observer(({id}) => {
     selectedSetTypeFlag,
     showFlagSetDatePicker,
     showFlagUnsetDatePicker,
+    selectedAdminOnly,
     setStudentNotes,
     setSelectedFlag,
     setSelectedUnSetTypeFlag,
     setSelectedSetTypeFlag,
     setShowFlagSetDatePicker,
     setShowFlagUnsetDatePicker,
+    setSelectedAdminOnly,
   } = addNotesStore;
 
   const onSetChange = (event: Event, selectedDate?: Date) => {
@@ -67,7 +70,12 @@ export const AddNotesSection: React.FC<AddNotesProps> = observer(({id}) => {
   };
 
   const showFlagSetDatePickerHandler = () => {
-    setShowFlagSetDatePicker(true);
+    if (selectedSetTypeFlag === '2') {
+      setShowFlagSetDatePicker(true);
+    } else if (selectedSetTypeFlag === '1') {
+      const currentDate = new Date();
+      addNotesStore.setFlagSetDate(currentDate);
+    }
   };
 
   const showFlagUnsetDatePickerHandler = () => {
@@ -106,6 +114,10 @@ export const AddNotesSection: React.FC<AddNotesProps> = observer(({id}) => {
     setSelectedUnSetTypeFlag(value);
   };
 
+  const handleRadioButtonAdminOnly = (value: string) => {
+    setSelectedAdminOnly(value);
+  };
+
   const onPressCancelButton = () => {
     Alert.alert(
       'Confirmation',
@@ -128,7 +140,6 @@ export const AddNotesSection: React.FC<AddNotesProps> = observer(({id}) => {
   };
 
   const handleSubmit = async () => {
-    // setIsLoading(true);
     try {
       if (!studentNotes) {
         ToastAndroid.showWithGravity(
@@ -139,20 +150,92 @@ export const AddNotesSection: React.FC<AddNotesProps> = observer(({id}) => {
         return;
       }
       addNotesStore.setErrorMessage('');
-
       const apiUrlFromStorage = await AsyncStorage.getItem('selectedItemInfo');
+      let flagSetType;
+      let flagSetDate;
+      let flagUnsetType;
+      let flagUnsetDate;
+      let studentNotesFlag;
+      let adminOnly;
+
+      if (selectedAdminOnly === '1') {
+        adminOnly = 'yes';
+      } else if (selectedAdminOnly === '2') {
+        adminOnly = 'no';
+      }
+
+      switch (selectedFlag) {
+        case '1':
+          studentNotesFlag = 'no_flag';
+          break;
+        case '2':
+          studentNotesFlag = 'new_registration';
+          break;
+        case '3':
+          studentNotesFlag = 'gray';
+          break;
+        case '4':
+          studentNotesFlag = 'blue';
+          break;
+        case '5':
+          studentNotesFlag = 'yellow';
+          break;
+        case '6':
+          studentNotesFlag = 'red';
+          break;
+        case '7':
+          studentNotesFlag = 'green';
+          break;
+        case '8':
+          studentNotesFlag = 'purple';
+          break;
+        case '9':
+          studentNotesFlag = 'orange';
+          break;
+        case '10':
+          studentNotesFlag = 'brown';
+          break;
+        case '11':
+          studentNotesFlag = 'golden';
+          break;
+        case '12':
+          studentNotesFlag = 'pink';
+          break;
+
+        default:
+          break;
+      }
+
+      if (selectedUnSetTypeFlag === '1') {
+        flagUnsetType = 'no_unset_date';
+        flagUnsetDate = formatDate(new Date());
+      } else if (selectedUnSetTypeFlag === '2') {
+        flagUnsetType = 'specify_unset_date';
+        flagUnsetDate = formatDate(addNotesStore.flagUnsetDate);
+      }
+
+      if (selectedSetTypeFlag === '1') {
+        flagSetType = 'immediately';
+        flagSetDate = formatDate(new Date());
+      } else if (selectedSetTypeFlag === '2') {
+        flagSetType = 'future_date';
+        flagSetDate = formatDate(addNotesStore.flagSetDate);
+      }
+
       if (apiUrlFromStorage) {
         const apiUrl = JSON.parse(apiUrlFromStorage).apiUrl;
         const requestBody = {
           studentKey: id.toString(),
           studentNotes: studentNotes,
-          studentNotesFlag: selectedFlag,
-          flagSetType: selectedSetTypeFlag,
-          flagSetDate: formatDate(addNotesStore.flagSetDate),
-          flagUnsetType: selectedUnSetTypeFlag,
-          flagUnsetDate: formatDate(addNotesStore.flagUnsetDate),
+          studentNotesFlag: studentNotesFlag,
+          flagSetType: flagSetType,
+          flagSetDate: flagSetDate,
+          flagUnsetType: flagUnsetType,
+          flagUnsetDate: flagUnsetDate,
+          adminOnly: adminOnly,
         };
 
+        console.log('requestBody', requestBody);
         const token = await AsyncStorage.getItem('token');
         const response = await fetch(apiUrl + 'add-student-notes', {
           method: 'POST',
@@ -200,7 +283,7 @@ export const AddNotesSection: React.FC<AddNotesProps> = observer(({id}) => {
             selectedId={selectedSetTypeFlag}
             containerStyle={dynamicStyles.radioButtonContainerFlag}
           />
-          {selectedSetTypeFlag !== 'immediately' && (
+          {selectedSetTypeFlag !== '1' && (
             <>
               <View
                 style={[dynamicStyles.flagNotesContainer, {marginBottom: 0}]}>
@@ -267,7 +350,7 @@ export const AddNotesSection: React.FC<AddNotesProps> = observer(({id}) => {
           />
         </View>
 
-        {selectedUnSetTypeFlag !== 'no_unset_date' && (
+        {selectedUnSetTypeFlag !== '1' && (
           <>
             <View style={dynamicStyles.flagNotesContainer}>
               <Text style={dynamicStyles.flagNotesLabel}>Flag Unset Date</Text>
@@ -345,8 +428,7 @@ export const AddNotesSection: React.FC<AddNotesProps> = observer(({id}) => {
         selectedId={selectedFlag}
         containerStyle={dynamicStyles.radioButtonContainer}
       />
-      {selectedFlag === 'new_registration' ||
-      selectedFlag === 'no_flag' ? null : (
+      {selectedFlag === 'new_registration' || selectedFlag === '1' ? null : (
         <View>
           {FlagSetDate()}
           {FlatUnsetType()}
@@ -358,6 +440,15 @@ export const AddNotesSection: React.FC<AddNotesProps> = observer(({id}) => {
           {addNotesStore.errorMessage}
         </Text>
       ) : null}
+      <View style={[dynamicStyles.AdminOnlyNotes]}>
+        <Text style={dynamicStyles.flagNotesLabel}>Admin Only</Text>
+        <RadioGroup
+          radioButtons={AdminOnlyButton}
+          onPress={handleRadioButtonAdminOnly}
+          selectedId={selectedAdminOnly}
+          containerStyle={dynamicStyles.radioButtonContainerFlag}
+        />
+      </View>
 
       <View style={dynamicStyles.buttonContainer}>
         <Pressable
