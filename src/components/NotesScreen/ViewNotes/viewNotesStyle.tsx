@@ -30,7 +30,6 @@ export const styles = StyleSheet.create({
   },
   eventRight: {
     width: '84%',
-
     paddingLeft: 0,
     paddingBottom: 25,
     paddingRight: 25,

@@ -4,7 +4,6 @@ import {fetchingPastEventsData} from '../../Store/CallLogsStore/callLogsStore';
 
 const handleCallEvent = (event: string, number: string | null) => {
   if (event && number) {
-    console.log(`Event: ${event}, Number: ${number}`);
     if (Platform.OS === 'android') {
       if (event === 'Offhook') {
         fetchingPastEventsData(number, event);
@@ -55,10 +54,8 @@ export const requestPermissions = async () => {
     );
 
     if (allPermissionsGranted) {
-      console.log('Permissions Accepted by User');
       callDetector = new CallDetectorManager(handleCallEvent, true);
     } else {
-      console.log('Some permissions were denied by user');
     }
   } catch (error) {
     console.error('Error requesting permissions:', error);

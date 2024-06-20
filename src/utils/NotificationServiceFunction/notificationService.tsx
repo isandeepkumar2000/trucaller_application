@@ -12,7 +12,6 @@ export async function requestUserPermission() {
       authStatus === messaging.AuthorizationStatus.PROVISIONAL;
 
     if (enabled) {
-      console.log('Authorization status:', authStatus);
       getFCMToken();
     }
   } catch (error) {
@@ -22,14 +21,13 @@ export async function requestUserPermission() {
 
 export const getFCMToken = async () => {
   let FCMToken = await AsyncStorage.getItem('FcmToken');
-  console.log(FCMToken, 'the old Token');
+
   if (!FCMToken) {
     try {
       await messaging().registerDeviceForRemoteMessages();
       const FCMToken = await messaging().getToken();
 
       if (FCMToken) {
-        console.log('the New Generate FCM token status get:', FCMToken);
         await AsyncStorage.setItem('FcmToken', FCMToken);
       }
     } catch (error) {
@@ -50,7 +48,6 @@ export const NotificationListener = async () => {
 
   messaging().onMessage(
     async (remoteMessage: FirebaseMessagingTypes.RemoteMessage) => {
-      console.log('received in foreground remoteMessage', remoteMessage);
       DisplayNotification(remoteMessage);
     },
   );

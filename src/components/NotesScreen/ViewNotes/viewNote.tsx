@@ -76,7 +76,6 @@ export const ViewNotes: React.FC<ViewNotesProps> = observer(({id}) => {
           body: JSON.stringify(requestBody),
         });
         const responseBody = await response.json();
-        console.log('responseBody', responseBody);
 
         if (response.ok) {
           const notes = responseBody.data || [];

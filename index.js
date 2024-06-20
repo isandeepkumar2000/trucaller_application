@@ -9,7 +9,6 @@ import {name as appName} from './app.json';
 import App from './src/App';
 
 notifee.onBackgroundEvent(async ({type, detail, event}) => {
-  console.log('Background Event:', event);
   const {notification, pressAction} = detail;
 
   if (
@@ -19,15 +18,10 @@ notifee.onBackgroundEvent(async ({type, detail, event}) => {
   ) {
     const notificationId = event.detail.notification.id;
     await notifee.cancelNotification(notificationId);
-    console.log('Notification cleared:', notificationId);
   }
 });
 
 messaging().setBackgroundMessageHandler(async remoteMessage => {
-  console.log(
-    'Message handled in the background:',
-    JSON.stringify(remoteMessage.data),
-  );
   DisplayNotification(remoteMessage);
 });
 

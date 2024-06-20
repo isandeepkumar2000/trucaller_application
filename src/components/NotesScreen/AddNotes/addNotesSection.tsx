@@ -232,10 +232,9 @@ export const AddNotesSection: React.FC<AddNotesProps> = observer(({id}) => {
           flagSetDate: flagSetDate,
           flagUnsetType: flagUnsetType,
           flagUnsetDate: flagUnsetDate,
-          adminOnly: adminOnly,
+          only_admin: adminOnly,
         };
 
-        console.log('requestBody', requestBody);
         const token = await AsyncStorage.getItem('token');
         const response = await fetch(apiUrl + 'add-student-notes', {
           method: 'POST',
